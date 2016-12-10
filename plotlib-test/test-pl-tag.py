@@ -1,6 +1,6 @@
 import unittest
 
-from plotlib import tag
+from plotlib import pl_tag as tag
 
 class Test(unittest.TestCase):
     def testTag(self):
