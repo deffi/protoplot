@@ -3,7 +3,7 @@ def make_tags_list(arg):
         # TODO verify that the list contains valid tags (strings or recursive
         # call?)
         # TODO allow all iterables, at least tuple
-        return list
+        return arg
     elif isinstance(arg, str):
         # TODO strip off whitespace
         # TODO allow splitting on whitespace
