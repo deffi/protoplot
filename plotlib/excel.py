@@ -1,0 +1,6 @@
+blue      = "#4572a7"
+red       = "#aa4643"
+green     = "#89a54e"
+purple    = "#71588f"
+turquoise = "#4198af"
+orange    = "#db843d"
