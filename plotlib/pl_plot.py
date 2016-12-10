@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 from plotlib import Item, Container, Series, BarSeries, Text, Legend, BarLayout
-from plotlib.util import select
+from plotlib.pl_util import select
 
 # TODO empty plots
 

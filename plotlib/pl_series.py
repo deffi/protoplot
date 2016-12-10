@@ -1,5 +1,5 @@
 from plotlib import Item
-from plotlib.util import is_single, is_multiple, filter_none, select
+from plotlib.pl_util import is_single, is_multiple, filter_none, select
 
 
 class Series(Item):

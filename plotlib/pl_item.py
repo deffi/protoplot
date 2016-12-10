@@ -1,5 +1,5 @@
-from plotlib.options_container import OptionsContainer 
-from plotlib.tag import make_tags_list
+from plotlib.pl_options_container import OptionsContainer 
+from plotlib.pl_tag import make_tags_list
 
 class ItemMetaclass(type):
     '''
