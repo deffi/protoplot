@@ -31,7 +31,14 @@ class TestItemContainer(unittest.TestCase):
         self.assertEqual(self.series_container.items[0].options.values["color"], "red")
         self.assertEqual(self.series_container.items[1].options.values["color"], "green")
 
-        
+    def testLast(self):
+        self.series_container.add()
+        self.assertIs(self.series_container.last, self.series_container.items[0])
+        self.series_container.add()
+        self.assertIs(self.series_container.last, self.series_container.items[1])
+        self.series_container.add()
+        self.assertIs(self.series_container.last, self.series_container.items[2])
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

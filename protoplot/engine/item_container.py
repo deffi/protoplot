@@ -2,15 +2,18 @@ from protoplot.engine.options_container import OptionsContainer
 
 class ItemContainer:
     '''
-    A container for items.
+    A homogeneous container for items.
     
-    Has: 
-      * A default item class
-      * An 'options' property of type OptionsContainer
-        This OptionsContainer represents default options for all contained items
-      * An 'add' method
-        This method create
-      * A 'last' item, representing the last item added 
+    An ItemContainer contains any number of instances of a specific subclass of
+    Item, called the ItemContainer's item class. An instance can be added to the
+    container by calling the container's add method.
+
+    As a convenience, an ItemContainer has a "last" property, representing the
+    last item added to the container (None if no item has been added so far).
+    
+    An item container has an "options" property, which represents the default
+    options for all items in this container, and a "set" method as a shortcut
+    for setting these options.    
     '''
     def __init__(self, itemClass):
         super().__init__()

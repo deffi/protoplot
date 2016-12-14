@@ -6,9 +6,13 @@ class _Entry:
         self.inherit = inherit
 
 class OptionsContainer():
+    '''
+    A collection of options in the form of key/value pairs.
+    
+    The options container maintains a list of known keys. Options with other
+    keys may be added, but this will elicit a warning.
+    '''
     def __init__(self, other = None):
-        #super().__init__(*args, **kwargs) # For dict superclass
-        # TODO should we store a reference to the "other" OC instead?
         if other is None:
             self.entries = {}
         else:
