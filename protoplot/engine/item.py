@@ -7,15 +7,15 @@ class Item(metaclass=ItemMetaclass):
     Represents an item in the item hierarchy. Items typically contain other
     items and item containers.
 
-    An Item has an "options" property, which represents the options explicitly
-    set for this instance, and a "set" method as a shortcut for setting these
-    options.    
+    An Item has an "options" property (of type OptionsContainer), which
+    contains the options explicitly set for this instance, and a "set" method as
+    a shortcut for setting these options.    
 
     In Item instance can also have one or multiple tags, and separate sets of
     options for each each tag (similar to CSS classes). 
 
-    Each Item subclass (!) also has an "options" property (also type
-    OptionsContainer), which represents the default options for all instances of
+    Each Item subclass (!) also has an "options" property (also of type
+    OptionsContainer), which contains the default options for all instances of
     that class, and a "set" method as a shortcut for setting these options.
     
     To implement an item, create a subclass of Item. Then, configure its options
@@ -27,7 +27,7 @@ class Item(metaclass=ItemMetaclass):
           * tag => use as tag(s)
         '''
 
-        # Create the tag ist and remove the tag argument from kwargs.        
+        # Create the tag list and remove the tag argument from kwargs.        
         if 'tag' in kwargs:
             self.tags = make_tags_list(kwargs['tag'])
             del kwargs['tag']
