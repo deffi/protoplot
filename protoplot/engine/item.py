@@ -4,23 +4,28 @@ from protoplot.engine.item_metaclass import ItemMetaclass  # @UnusedImport
  
 class Item(metaclass=ItemMetaclass):
     '''
-    Represents an item in the item hierarchy. Items typically contain other
-    items and item containers.
+    Represents an item in the tree. Items typically contain (a) other items, and
+    (b) item containers.
 
-    An Item has an "options" property (of type OptionsContainer), which
-    contains the options explicitly set for this instance, and a "set" method as
-    a shortcut for setting these options.    
+    An Item *instance* has the following attributes:
+      * An "options" property (of type OptionsContainer), which contains the
+        options for this specific instance.
+      * A "set" method as a shortcut for setting these options.
+      * A (potentially empty) set of tags to allow selective application of
+        options (a tag is similar to a class in CSS).
+      
+    An Item *subclass* has the following (class) attributes:
+      * An item accessor which will return a template item instance for a given
+        tag specification, which can be a string or the empty slice to specify
+        the default template. 
+      * An "all" property as a shortcut for [:]
+      * A "set" method as a shortcut for [:].set 
 
-    In Item instance can also have one or multiple tags, and separate sets of
-    options for each each tag (similar to CSS classes). 
-
-    Each Item subclass (!) also has an "options" property (also of type
-    OptionsContainer), which contains the default options for all instances of
-    that class, and a "set" method as a shortcut for setting these options.
-    
-    To implement an item, create a subclass of Item. Then, configure its options
-    by calling .options.register.
+    Item subclasses should call the Item constructor with all *args and **kwargs
+    and configure their options in the constructor like so:
+        self.options.register("color", False)
     '''
+    
     def __init__(self, **kwargs):
         '''
         All kwargs will be used as options, except:
@@ -35,9 +40,9 @@ class Item(metaclass=ItemMetaclass):
             self.tags = []
         
         # Create the instance-level options and initialize them from the
-        # remaining kwargs. Note that the subclass-level options are created by
-        # the metaclass.
-        self.options = OptionsContainer(self.__class__.options)
+        # remaining kwargs.
+        #self.options = OptionsContainer(self.__class__.options)
+        self.options = OptionsContainer()
         self.options.set(**kwargs)
 
         # Add the instance-level set method. See __set for an explanation. 
@@ -46,9 +51,9 @@ class Item(metaclass=ItemMetaclass):
     @classmethod
     def set(cls, **kwargs):
         '''
-        A setter shortcut for the subclass-level options.
+        A setter shortcut for the default template
         '''
-        cls.options.set(**kwargs)
+        cls[""].set(**kwargs)
 
     def __set(self, **kwargs):
         '''
