@@ -43,6 +43,8 @@ class ItemContainer:
     ## Templates ##
     ###############
 
+    # Note that these methods are the same as in ItemMetaclass. 
+
     def __getitem__(self, tag):
         # If there is no template for this tag yet, add one 
         if tag not in self.__templates:

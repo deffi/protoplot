@@ -48,22 +48,14 @@ class Item(metaclass=ItemMetaclass):
         # Add the instance-level set method. See __set for an explanation. 
         self.set = self.__set
 
-    # TODO for uniformity with ItemContainer, we might want to move this to the
-    # metaclass; in this case, can we define set as a regular instance method?
-    @classmethod
-    def set(cls, **kwargs):
-        '''
-        A setter shortcut for the default template
-        '''
-        cls[""].set(**kwargs)
-
     def __set(self, **kwargs):
         '''
         A setter shortcut for the instance-level options.
         
         This can't be called "set" because there is already a class method with
-        the same name and Python does not have separate namespaces for class
-        methods and instance methods. Therefore, this method will be assigned to
-        the name of "set" in the instance namespace by the constructor.
+        the same name (defined in the metaclass) and Python does not have
+        separate namespaces for class methods and instance methods. Therefore,
+        this method will be assigned to the name of "set" in the instance
+        namespace by the constructor.
         '''
         self.options.set(**kwargs)
