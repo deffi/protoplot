@@ -3,12 +3,12 @@ import unittest
 from protoplot.engine.item import Item
 from protoplot.engine.item_container import ItemContainer
 
-class Series(Item):
-    pass
-
-Series.options.register("color", True)
-Series.options.register("lineWidth", False)
-Series.options.register("lineStyle", False)
+# class Series(Item):
+#     pass
+# 
+# Series.options.register("color", True)
+# Series.options.register("lineWidth", False)
+# Series.options.register("lineStyle", False)
 
 class TestOptionsResolving(unittest.TestCase):
     def setUp(self):
