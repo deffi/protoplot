@@ -17,7 +17,7 @@ class Item(metaclass=ItemMetaclass):
     An Item *subclass* has the following (class) attributes:
       * An item accessor which will return a template item instance for a given
         tag specification, which can be a string or the empty slice to specify
-        the default template. 
+        the default template. (TODO really empty slice?)
       * An "all" property as a shortcut for [:]
       * A "set" method as a shortcut for [:].set 
 
@@ -48,6 +48,8 @@ class Item(metaclass=ItemMetaclass):
         # Add the instance-level set method. See __set for an explanation. 
         self.set = self.__set
 
+    # TODO for uniformity with ItemContainer, we might want to move this to the
+    # metaclass; in this case, can we define set as a regular instance method?
     @classmethod
     def set(cls, **kwargs):
         '''
