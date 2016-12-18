@@ -3,6 +3,10 @@ import unittest
 from protoplot.engine.item import Item
 
 class Test(unittest.TestCase):
+    ##################
+    ## Test fixture ##
+    ##################
+    
     def setUp(self):
         class Legend(Item):
             def __init__(self, *args, **kwargs):
@@ -29,6 +33,31 @@ class Test(unittest.TestCase):
 
     def tearDown(self):
         pass
+
+
+    #########
+    ## Tag ##
+    #########
+        
+    def testTag(self):
+        Series = self.Series
+
+        series = Series()
+        self.assertEqual(series.tags, [])
+
+        series = Series(tag="foo")
+        self.assertEqual(series.tags, ["foo"])
+
+        series = Series(tag="foo,bar")
+        self.assertEqual(series.tags, ["foo", "bar"])
+
+        series = Series(tag=["foo", "bar"])
+        self.assertEqual(series.tags, ["foo", "bar"])
+
+
+    #############
+    ## Options ##
+    #############
 
     def testOptionCount(self):
         plot   = self.Plot()
@@ -66,21 +95,11 @@ class Test(unittest.TestCase):
   
         self.assertEqual(series1.options.values["lineWidth"], 1)
         self.assertEqual(series2.options.values["lineWidth"], 2)
-    
-    def testTag(self):
-        Series = self.Series
 
-        series = Series()
-        self.assertEqual(series.tags, [])
 
-        series = Series(tag="foo")
-        self.assertEqual(series.tags, ["foo"])
-
-        series = Series(tag="foo,bar")
-        self.assertEqual(series.tags, ["foo", "bar"])
-
-        series = Series(tag=["foo", "bar"])
-        self.assertEqual(series.tags, ["foo", "bar"])
+    ###############
+    ## Templates ##
+    ###############
 
     def testTemplates(self):
         Series = self.Series
@@ -88,6 +107,9 @@ class Test(unittest.TestCase):
         # Same template is same, different templates are different
         self.assertIs   (Series["foo"], Series["foo"])
         self.assertIsNot(Series["foo"], Series["bar"])
+
+    def testAll(self):
+        Series = self.Series
 
         # Special access using .all
         self.assertIs(Series.all, Series[""])
@@ -110,7 +132,7 @@ class Test(unittest.TestCase):
         
         self.assertEqual(Series.all.options.values["color"], "red")
 
-    def testNested(self):
+    def testNestedTemplates(self):
         # This is for the case where one items explicitly contains another. If
         # an item contains multiple items (such as series in a plot), that's
         # a case for item containers. 
