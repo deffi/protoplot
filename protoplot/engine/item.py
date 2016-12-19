@@ -77,10 +77,24 @@ class Item(metaclass=ItemMetaclass):
         '''
         self.options.set(**kwargs)
 
-    def _resolve_own_options(self):
-        return self.options.values
+    def _resolve_options_self(self):
+        result = {}
+        
+        # Default options from the class, i. e. [Class].all.options
+        result.update(type(self).all.options.values)
+        
+        # Options from the class by tag, i. e. [Class]["..."].options
+        # TODO there may be multiple matches here with no defined precedence.
+        for tag in self.tags:
+            result.update(type(self)[tag].options.values)
+            
+        # Options from this instance, i. e. instance.options (set last, takes
+        # precedence over all of the others).
+        result.update(self.options.values)
+        
+        return result
 
-    def _resolve_child_options(self):
+    def _resolve_options_children(self):
         result = {}
         
         for child in self.children():
@@ -88,7 +102,7 @@ class Item(metaclass=ItemMetaclass):
 
         return result
     
-    def _resolve_container_options(self):
+    def _resolve_options_containers(self):
         result = {}
         
         for container in self.containers():
@@ -99,7 +113,7 @@ class Item(metaclass=ItemMetaclass):
 
     def resolve_options(self, parent = None, containerTemplates = []):
         result = {}
-        result[self] = self._resolve_own_options()
-        result.update(self._resolve_child_options())
-        result.update(self._resolve_container_options())
+        result[self] = self._resolve_options_self()
+        result.update(self._resolve_options_children())
+        result.update(self._resolve_options_containers())
         return result

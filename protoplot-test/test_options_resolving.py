@@ -34,9 +34,9 @@ class TestOptionsResolving(unittest.TestCase):
                 self.legend = Legend()
  
         plot=Plot()
-        plot.series.add()
-        plot.series.add()
-        plot.series.add()
+        plot.series.add(tag="one")
+        plot.series.add(tag="two")
+        plot.series.add(tag="one,two")
  
         self.Legend = Legend
         self.Plot = Plot
@@ -50,6 +50,10 @@ class TestOptionsResolving(unittest.TestCase):
     ###################
     ## Single source ##
     ###################
+
+    def testNotSet(self):
+        # TODO must be at the default value
+        pass
 
     def testSpecific(self):
         self.plot                .set(a=1)
@@ -74,14 +78,22 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.plot.resolve_options()
 
-        #self.assertEqual(resolved[self.plot                ]["a"], 1)
-        #self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        #self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        #self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-        #self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+        self.assertEqual(resolved[self.plot                ]["a"], 1)
+        self.assertEqual(resolved[self.plot.legend         ]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
  
     def testClassTemplateByTag(self):
-        pass
+        self.Series["one"].set(a=1)
+        self.Series["two"].set(a=2)
+
+        resolved = self.plot.resolve_options()
+
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
+        # TODO in case both tags match, which one is effective?
+        self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
     
     def testContainerTemplateAll(self):
         pass
