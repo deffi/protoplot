@@ -55,6 +55,19 @@ class Test(unittest.TestCase):
         self.assertEqual(series.tags, ["foo", "bar"])
 
 
+    ##############
+    ## Children ##
+    ##############
+
+    def testChildren(self):
+        plot = self.Plot()
+        
+        self.assertEqual(plot.children(), [plot.legend])
+    
+    def testContainers(self):
+        # TODO implement
+        pass
+
     #############
     ## Options ##
     #############

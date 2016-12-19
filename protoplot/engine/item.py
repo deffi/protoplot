@@ -1,6 +1,7 @@
 from protoplot.engine.options_container import OptionsContainer
 from protoplot.engine.tag import make_tags_list
 from protoplot.engine.item_metaclass import ItemMetaclass  # @UnusedImport
+from protoplot.engine.item_container import ItemContainer
  
 class Item(metaclass=ItemMetaclass):
     '''
@@ -48,6 +49,22 @@ class Item(metaclass=ItemMetaclass):
         # Add the instance-level set method. See __set for an explanation. 
         self.set = self.__set
 
+
+    ##############
+    ## Children ##
+    ##############
+
+    def children(self):
+        return [a for a in self.__dict__.values() if isinstance(a, Item)]
+
+    def containers(self):
+        return [a for a in self.__dict__.values() if isinstance(a, ItemContainer)]
+
+
+    #############
+    ## Options ##
+    #############
+
     def __set(self, **kwargs):
         '''
         A setter shortcut for the instance-level options.
@@ -59,3 +76,30 @@ class Item(metaclass=ItemMetaclass):
         namespace by the constructor.
         '''
         self.options.set(**kwargs)
+
+    def _resolve_own_options(self):
+        return self.options.values
+
+    def _resolve_child_options(self):
+        result = {}
+        
+        for child in self.children():
+            result.update(child.resolve_options())
+
+        return result
+    
+    def _resolve_container_options(self):
+        result = {}
+        
+        for container in self.containers():
+            for item in container.items:
+                result.update(item.resolve_options())
+                
+        return result
+
+    def resolve_options(self, parent = None, containerTemplates = []):
+        result = {}
+        result[self] = self._resolve_own_options()
+        result.update(self._resolve_child_options())
+        result.update(self._resolve_container_options())
+        return result
