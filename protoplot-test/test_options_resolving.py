@@ -116,17 +116,27 @@ class TestOptionsResolving(unittest.TestCase):
         # TODO in case both tags match, which one is effective?
         self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
 
-    def testChildTemplateAll(self):
+
+    #################################
+    ## Single source from ancestor ##
+    #################################
+
+    def testAncestorClassTemplateAll(self):
         # Plot.all.legend.set(...)
-        # TODO nah, selecting a higher-level thing is something different
-        #self.assertEqual(1, 2)
         pass
 
-    def testChildTemplateByTag(self):
-        # Plot[...].all.legend.set(...)
-        # TODO nah, selecting a higher-level thing is something different
-        #self.assertEqual(1, 2)
+    def testAncesterClassTemplateByTag(self):
+        # Plot[...].legend.set(...)
         pass
+
+    def testAncestorContainerTemplateAll(self):
+        # page.plots.all.legend.set(...)
+        pass
+
+    def testAncestorContainerTemplateByTag(self):
+        # page.plots[...].legend.set(...)
+        pass
+    
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
