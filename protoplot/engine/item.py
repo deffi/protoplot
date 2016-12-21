@@ -81,21 +81,17 @@ class Item(metaclass=ItemMetaclass):
         # Gather a list of applicable templates from the template containers,
         # which are (a) the class, and (b) the container (if any)
         applicable_templates = []
-        my_class = type(self)
-        applicable_templates += my_class.applicable_templates(self.tags)
+        applicable_templates += type(self).applicable_templates(self.tags)
         if container is not None:
             applicable_templates += container.applicable_templates(self.tags)
         
+        
+        # Apply the options from the templates and from this instance (in this
+        # order, so the options from this instance take precedence).
         result = {}
-        
-        # Apply the options from the templates
-        for template in applicable_templates:
-            result.update(template.options.values)
+        for item in applicable_templates + [self]:
+            result.update(item.options.values)
             
-        # Apply the options from this instance (after the options from the
-        # templates so they take precedence).
-        result.update(self.options.values)
-        
         return result
 
     def _resolve_options_children(self):
