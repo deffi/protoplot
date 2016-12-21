@@ -55,10 +55,14 @@ class Item(metaclass=ItemMetaclass):
     ##############
 
     def children(self):
-        return [a for a in self.__dict__.values() if isinstance(a, Item)]
+        return [(name, attribute)
+            for name, attribute in self.__dict__.items()
+            if isinstance(attribute, Item)]
 
     def containers(self):
-        return [a for a in self.__dict__.values() if isinstance(a, ItemContainer)]
+        return [(name, attribute)
+            for name, attribute in self.__dict__.items()
+            if isinstance(attribute, ItemContainer)]
 
 
     #############
@@ -89,36 +93,32 @@ class Item(metaclass=ItemMetaclass):
         
         return result
 
-    def _resolve_options_self(self, container):
+    def resolve_own_options(self, applicable_templates):
         # Apply the options from the templates and from this instance (in this
         # order, so the options from this instance take precedence).
         result = {}
-        for item in self.applicable_templates(container) + [self]:
+        for item in applicable_templates + [self]:
             result.update(item.options.values)
             
         return result
 
-    def _resolve_options_children(self):
+    def resolve_options(self, parent = None, container = None):
+        # TODO do we need parent here? Probably for inheriting.
         result = {}
-        
-        for child in self.children():
+
+        # The templates that we have to consider in parallel to this instance
+        applicable_templates = self.applicable_templates(container)
+
+        # Add the options for self
+        result[self] = self.resolve_own_options(applicable_templates)
+
+        # Recursively add the options for each child
+        for name, child in self.children():
             result.update(child.resolve_options())
 
-        return result
-    
-    def _resolve_options_containers(self):
-        result = {}
-        
-        for container in self.containers():
+        # Recursively add the options for each container
+        for name, container in self.containers():
             for item in container.items:
                 result.update(item.resolve_options(container = container))
-                
-        return result
-
-    def resolve_options(self, parent = None, container = None):
-        # FIXME do we need parent here? Probably for inheriting.
-        result = {}
-        result[self] = self._resolve_options_self(container)
-        result.update(self._resolve_options_children())
-        result.update(self._resolve_options_containers())
+        
         return result
