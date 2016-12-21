@@ -80,29 +80,57 @@ class Item(metaclass=ItemMetaclass):
     def _resolve_options_self(self, container):
         # TODO we probably want "template containers" here, which would
         # container type(self) and the container.
+        # TODO we currently iterate over the tags and select matching templates,
+        # but we have to do it the other way: iterate over templates and check
+        # if their selector matches one of our tags, so we can use regular
+        # expressions or functions as selectors. However, we still have to make
+        # sure that the "all" template has lower precedence than (is overridden
+        # by) the named ones. 
+
+        # Gather a list of applicable templates
+        applicable_templates = []
+        my_class = type(self)
+        applicable_templates.append(my_class.all)
+        for tag in self.tags:
+            applicable_templates.append(my_class[tag])
+        if container is not None:
+            applicable_templates.append(container.all)
+            for tag in self.tags:
+                applicable_templates.append(container[tag])
         
         result = {}
         
-        # Default options from the class, i. e. [Class].all.options
-        result.update(type(self).all.options.values)
-        
-        # Options from the class by tag, i. e. [Class]["..."].options
-        # TODO there may be multiple matches here with no defined precedence.
-        for tag in self.tags:
-            result.update(type(self)[tag].options.values)
-        
-        # Default options from the container, i. e. items.all.options
-        if container is not None:
-            result.update(container.all.options.values)
-        
-        # Options from the container by tag, i. e. items["..."].options
-        if container is not None:
-            for tag in self.tags:
-                result.update(container[tag].options.values)
-        
-        # Options from this instance, i. e. instance.options (set last, takes
-        # precedence over all of the others).
+        # Apply the options from the templates
+        for template in applicable_templates:
+            result.update(template.options.values)
+            
+        # Apply the options from this instance (after the options from the
+        # templates so they take precedence).
         result.update(self.options.values)
+        
+        
+#         result = {}
+#  
+#         # Default options from the class, i. e. [Class].all.options
+#         result.update(type(self).all.options.values)
+#          
+#         # Options from the class by tag, i. e. [Class]["..."].options
+#         # TODO there may be multiple matches here with no defined precedence.
+#         for tag in self.tags:
+#             result.update(type(self)[tag].options.values)
+#          
+#         # Default options from the container, i. e. items.all.options
+#         if container is not None:
+#             result.update(container.all.options.values)
+#          
+#         # Options from the container by tag, i. e. items["..."].options
+#         if container is not None:
+#             for tag in self.tags:
+#                 result.update(container[tag].options.values)
+#          
+#         # Options from this instance, i. e. instance.options (set last, takes
+#         # precedence over all of the others).
+#         result.update(self.options.values)
         
         return result
 
@@ -124,7 +152,7 @@ class Item(metaclass=ItemMetaclass):
         return result
 
     def resolve_options(self, parent = None, container = None):
-        # FIXME do we need parent here?
+        # FIXME do we need parent here? Probably for inheriting.
         result = {}
         result[self] = self._resolve_options_self(container)
         result.update(self._resolve_options_children())

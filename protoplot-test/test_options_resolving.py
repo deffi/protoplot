@@ -33,7 +33,7 @@ class TestOptionsResolving(unittest.TestCase):
                 self.series = ItemContainer(Series)
                 self.legend = Legend()
  
-        plot=Plot()
+        plot=Plot(tag="alpha")
         plot.series.add(tag="one")
         plot.series.add(tag="two")
         plot.series.add(tag="one,two")
@@ -122,12 +122,26 @@ class TestOptionsResolving(unittest.TestCase):
     #################################
 
     def testAncestorClassTemplateAll(self):
-        # Plot.all.legend.set(...)
-        pass
+        self.Plot.all.legend    .set(a=2)
+        self.Plot.all.series.all.set(a=3)
+
+        resolved = self.plot.resolve_options()
+
+#         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+#         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+#         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+#         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
 
     def testAncesterClassTemplateByTag(self):
-        # Plot[...].legend.set(...)
-        pass
+        self.Plot["alpha"].legend    .set(a=2)
+        self.Plot["alpha"].series.all.set(a=3)
+
+        resolved = self.plot.resolve_options()
+
+#         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+#         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+#         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+#         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
 
     def testAncestorContainerTemplateAll(self):
         # page.plots.all.legend.set(...)
