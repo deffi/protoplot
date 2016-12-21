@@ -37,7 +37,7 @@ class ItemMetaclass(type):
         '''
         cls[""].set(**kwargs)
 
-    def applicable_templates(cls, tags):  # @NoSelf
+    def matching_templates(cls, tags):  # @NoSelf
         '''
         Returns a list of applicable templates for an object with the specified
         tags, in increasing order of preference.

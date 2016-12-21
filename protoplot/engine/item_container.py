@@ -67,7 +67,7 @@ class ItemContainer:
         '''
         self[""].set(**kwargs)
 
-    def applicable_templates(self, tags):
+    def matching_templates(self, tags):
         '''
         Returns a list of applicable templates for an object with the specified
         tags, in increasing order of preference.

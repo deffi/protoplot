@@ -77,19 +77,23 @@ class Item(metaclass=ItemMetaclass):
         '''
         self.options.set(**kwargs)
 
-    def _resolve_options_self(self, container):
-        # Gather a list of applicable templates from the template containers,
-        # which are (a) the class, and (b) the container (if any)
-        applicable_templates = []
-        applicable_templates += type(self).applicable_templates(self.tags)
+    def applicable_templates(self, container):
+        result = []
+        
+        # The templates of the class are applicable in any case 
+        result += type(self).matching_templates(self.tags)
+        
+        # The templates of the container - if we have one - are also applicable
         if container is not None:
-            applicable_templates += container.applicable_templates(self.tags)
+            result += container.matching_templates(self.tags)
         
-        
+        return result
+
+    def _resolve_options_self(self, container):
         # Apply the options from the templates and from this instance (in this
         # order, so the options from this instance take precedence).
         result = {}
-        for item in applicable_templates + [self]:
+        for item in self.applicable_templates(container) + [self]:
             result.update(item.options.values)
             
         return result
