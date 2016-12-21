@@ -41,6 +41,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.Legend = Legend
         self.Plot = Plot
         self.Series = Series
+        
         self.plot = plot
 
     def tearDown(self):
@@ -96,11 +97,37 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
     
     def testContainerTemplateAll(self):
-        pass
+        self.plot.series.all.set(a=2)
+ 
+        resolved = self.plot.resolve_options()
+
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
     
     def testContainerTemplateByTag(self):
+        self.plot.series["one"].set(a=1)
+        self.plot.series["two"].set(a=2)
+
+        resolved = self.plot.resolve_options()
+
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
+        # TODO in case both tags match, which one is effective?
+        self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
+
+    def testChildTemplateAll(self):
+        # Plot.all.legend.set(...)
+        # TODO nah, selecting a higher-level thing is something different
+        #self.assertEqual(1, 2)
         pass
- 
+
+    def testChildTemplateByTag(self):
+        # Plot[...].all.legend.set(...)
+        # TODO nah, selecting a higher-level thing is something different
+        #self.assertEqual(1, 2)
+        pass
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

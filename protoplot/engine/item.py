@@ -77,7 +77,10 @@ class Item(metaclass=ItemMetaclass):
         '''
         self.options.set(**kwargs)
 
-    def _resolve_options_self(self):
+    def _resolve_options_self(self, container):
+        # TODO we probably want "template containers" here, which would
+        # container type(self) and the container.
+        
         result = {}
         
         # Default options from the class, i. e. [Class].all.options
@@ -87,7 +90,16 @@ class Item(metaclass=ItemMetaclass):
         # TODO there may be multiple matches here with no defined precedence.
         for tag in self.tags:
             result.update(type(self)[tag].options.values)
-            
+        
+        # Default options from the container, i. e. items.all.options
+        if container is not None:
+            result.update(container.all.options.values)
+        
+        # Options from the container by tag, i. e. items["..."].options
+        if container is not None:
+            for tag in self.tags:
+                result.update(container[tag].options.values)
+        
         # Options from this instance, i. e. instance.options (set last, takes
         # precedence over all of the others).
         result.update(self.options.values)
@@ -107,13 +119,14 @@ class Item(metaclass=ItemMetaclass):
         
         for container in self.containers():
             for item in container.items:
-                result.update(item.resolve_options())
+                result.update(item.resolve_options(container = container))
                 
         return result
 
-    def resolve_options(self, parent = None, containerTemplates = []):
+    def resolve_options(self, parent = None, container = None):
+        # FIXME do we need parent here?
         result = {}
-        result[self] = self._resolve_options_self()
+        result[self] = self._resolve_options_self(container)
         result.update(self._resolve_options_children())
         result.update(self._resolve_options_containers())
         return result
