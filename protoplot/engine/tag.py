@@ -18,3 +18,23 @@ def make_tags_list(arg):
         return arg.split(",")
     else:
         raise ValueError("Unsupported tags specification: %s" % repr(arg))
+
+def match_tags(selectors, item_tags):
+    '''
+    Returns a list of selectors which match the item_tags, in increasing order
+    of priority.
+    '''
+    
+    result = []
+    
+    # First of all, the default selector (so it has the lowest priority)
+    if "" in selectors:
+        result.append("") 
+    
+    # Now all remaining selectors 
+    for selector in selectors:
+        if selector != "":
+            if selector in item_tags:
+                result.append(selector)
+
+    return result

@@ -1,3 +1,5 @@
+from protoplot.engine.tag import match_tags
+
 class ItemContainer:
     '''
     A homogeneous container for items.
@@ -43,7 +45,9 @@ class ItemContainer:
     ## Templates ##
     ###############
 
-    # Note that these methods are the same as in ItemMetaclass. 
+    # Note that these methods are the same as in ItemMetaclass.
+    # TODO We should definitely merge them somehow.
+    # TODO in some places, it should say "selector" instead of "tag" 
 
     def __getitem__(self, tag):
         # If there is no template for this tag yet, add one 
@@ -62,3 +66,11 @@ class ItemContainer:
         A setter shortcut for the default template
         '''
         self[""].set(**kwargs)
+
+    def applicable_templates(self, tags):
+        '''
+        Returns a list of applicable templates for an object with the specified
+        tags, in increasing order of preference.
+        '''
+        keys = match_tags(self.__templates.keys(), tags)
+        return [self.__templates[key] for key in keys]

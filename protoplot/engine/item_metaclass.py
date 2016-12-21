@@ -1,3 +1,5 @@
+from protoplot.engine.tag import match_tags
+
 class ItemMetaclass(type):
     '''
     Adds the following to each class that uses this metaclass:
@@ -34,3 +36,11 @@ class ItemMetaclass(type):
         A setter shortcut for the default template
         '''
         cls[""].set(**kwargs)
+
+    def applicable_templates(cls, tags):  # @NoSelf
+        '''
+        Returns a list of applicable templates for an object with the specified
+        tags, in increasing order of preference.
+        '''
+        keys = match_tags(cls.__templates.keys(), tags)
+        return [cls.__templates[key] for key in keys]
