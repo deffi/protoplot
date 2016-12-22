@@ -70,7 +70,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.plot.series.items[1].set(a=4)
         self.plot.series.items[2].set(a=5)
  
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot                ]["a"], 1)
         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
@@ -84,7 +84,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.Series.all.set(a=2)
         self.Legend.all.set(a=3)
   
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot                ]["a"], 1)
         self.assertEqual(resolved[self.plot.legend         ]["a"], 3)
@@ -96,7 +96,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.Series["one"].set(a=1)
         self.Series["two"].set(a=2)
  
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
@@ -106,7 +106,7 @@ class TestOptionsResolving(unittest.TestCase):
     def testContainerTemplateAll(self):
         self.plot.series.all.set(a=2)
   
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
@@ -116,7 +116,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.plot.series["one"].set(a=1)
         self.plot.series["two"].set(a=2)
  
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
@@ -132,7 +132,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.Plot.all.legend    .set(a=2)
         self.Plot.all.series.all.set(a=3)
  
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
@@ -143,7 +143,7 @@ class TestOptionsResolving(unittest.TestCase):
         self.Plot["alpha"].legend    .set(a=2)
         self.Plot["alpha"].series.all.set(a=3)
  
-        resolved = self.plot.resolve_options()
+        resolved = self.page.resolve_options()
  
         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
