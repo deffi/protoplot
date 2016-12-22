@@ -41,21 +41,23 @@ class TestOptionsResolving(unittest.TestCase):
         # Create instances
         page=Page()                
         plot=page.plots.add(tag="alpha")
+        legend=plot.legend
         series=[
             plot.series.add(tag="one"),
             plot.series.add(tag="two"),
             plot.series.add(tag="one,two"),
         ]
  
-        # Store the classes in the test
+        # Store the classes in the test case
         self.Page   = Page
         self.Plot   = Plot
         self.Legend = Legend
         self.Series = Series
 
-        # Store the instances in the test
+        # Store the instances in the test case
         self.page   = page        
         self.plot   = plot
+        self.legend = legend
         self.series = series
 
     def tearDown(self):
@@ -67,34 +69,136 @@ class TestOptionsResolving(unittest.TestCase):
     #####################
 
     def testObjectIdentity(self):
+        # We store some objects in the test case - make sure that they are
+        # identical to the correct items in the tree.
         self.assertIs(self.plot     , self.page.plots.items[0])
+        self.assertIs(self.legend   , self.plot.legend)
         self.assertIs(self.series[0], self.plot.series.items[0])
         self.assertIs(self.series[1], self.plot.series.items[1])
         self.assertIs(self.series[2], self.plot.series.items[2])
+
+
+    #####################
+    ## Setting options ##
+    #####################
+    
+    # The model looks like this:
+    #     page
+    #     '- plots...
+    #        |- legend
+    #        '- series...
+
+    # To set options for an item (page, plot, legend, or series), we select it
+    # by starting either with a class template or an instance. We then select
+    # children directly (legend) or via container template (plots, series). A
+    # class template or container template is selected either by (class or
+    # container)["..."] or by (class or container).all.   
+    #
+    # These are the possible ways to set options for series:
+    #     Page.all.plots.all.series.all.set(...)
+    #     my_page .plots.all.series.all.set(...)
+    #              Plot .all.series.all.set(...)
+    #              my_plot  .series.all.set(...)
+    #                        Series.all.set(...)
+    #                        my_series .set(...)
+    # For legend:
+    #     Page.all.plots.all.legend.set(...)
+    #     my_page .plots.all.legend.set(...)
+    #              Plot .all.legend.set(...)
+    #              my_plot  .legend.set(...)
+    #                        Legend.all.set(...)
+    #                        my_legend .set(...)
+    # For plot:
+    #     Page.all.plots.all.set(...)
+    #     my_page .plots.all.set(...)
+    #              Plot .all.set(...)
+    #              my_plot  .set(...)
+    # For page:
+    #     Page.all.set(...)
+    #     my_page .set(...)
+    #
+    # We can only test a item once per test, so we group the cases by how they
+    # start, not by how they end (i. e. what is accessed).
+    #
+    # Note that we only use the default selector (.all) here - we use tag
+    # selectors in the next section. Also, there is a shortcut that allows us
+    # to call .set directly on a container or a class - we also test that in a
+    # separate section.
+
+    def testOptionsViaPageClass(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaPageInstance(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaPlotClass(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaPlotInstance(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaLegendClass(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaLegendInstance(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaSeriesClass(self):
+        # TODO implement
+        pass
+    
+    def testOptionsViaSeriesInstance(self):
+        # TODO implement
+        pass
+
+
+    ###############
+    ## Selectors ##
+    ###############
+
+    # Test non-default selectors, i. e. ["..."] instead of (and in conjunction
+    # with) the default selector (.all). Also make sure that [""] is the same
+    # as .all.
+
+    
+    ###############
+    ## Shortcuts ##
+    ###############
+    
+    # Plot.set(...) for Plot.all.set(...)
+    # my_plot.series(...) for my_plot.series.all.set(...)
 
 
     ###################
     ## Single source ##
     ###################
 
+    # TODO move these tests into the above sections
+
     def testNotSet(self):
         # TODO must be at the default value
         pass
  
     def testSpecific(self):
-        self.plot                .set(a=1)
-        self.plot.legend         .set(a=2)
-        self.plot.series.items[0].set(a=3)
-        self.plot.series.items[1].set(a=4)
-        self.plot.series.items[2].set(a=5)
+        self.plot       .set(a=1)
+        self.plot.legend.set(a=2)
+        self.series[0]  .set(a=3)
+        self.series[1]  .set(a=4)
+        self.series[2]  .set(a=5)
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot                ]["a"], 1)
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 4)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 5)
+        self.assertEqual(resolved[self.plot       ]["a"], 1)
+        self.assertEqual(resolved[self.plot.legend]["a"], 2)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 4)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 5)
          
   
     def testClassTemplateAll(self):
@@ -104,11 +208,11 @@ class TestOptionsResolving(unittest.TestCase):
   
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot                ]["a"], 1)
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
+        self.assertEqual(resolved[self.plot       ]["a"], 1)
+        self.assertEqual(resolved[self.plot.legend]["a"], 3)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 2)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 2)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 2)
   
     def testClassTemplateByTag(self):
         self.Series["one"].set(a=1)
@@ -116,19 +220,19 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
+        self.assertEqual(resolved[self.series[0]]["a"], 1) # one
+        self.assertEqual(resolved[self.series[1]]["a"], 2) # two
         # TODO in case both tags match, which one is effective?
-        self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
+        self.assertIn   (resolved[self.series[2]]["a"], [1, 2]) # one,two
      
     def testContainerTemplateAll(self):
         self.plot.series.all.set(a=2)
   
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
+        self.assertEqual(resolved[self.series[0]]["a"], 2)
+        self.assertEqual(resolved[self.series[1]]["a"], 2)
+        self.assertEqual(resolved[self.series[2]]["a"], 2)
      
     def testContainerTemplateByTag(self):
         self.plot.series["one"].set(a=1)
@@ -136,10 +240,10 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
+        self.assertEqual(resolved[self.series[0]]["a"], 1) # one
+        self.assertEqual(resolved[self.series[1]]["a"], 2) # two
         # TODO in case both tags match, which one is effective?
-        self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
+        self.assertIn   (resolved[self.series[2]]["a"], [1, 2]) # one,two
 
 
     #################################
@@ -152,10 +256,10 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+        self.assertEqual(resolved[self.plot.legend]["a"], 2)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
  
     def testAncesterClassTemplateByTag(self):
         self.Plot["alpha"].legend    .set(a=2)
@@ -163,10 +267,10 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+        self.assertEqual(resolved[self.plot.legend]["a"], 2)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
  
     def testAncestorContainerTemplateAll(self):
         self.page.plots.all.legend    .set(a=2)
@@ -174,10 +278,10 @@ class TestOptionsResolving(unittest.TestCase):
 
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+        self.assertEqual(resolved[self.plot.legend]["a"], 2)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
  
     def testAncestorContainerTemplateByTag(self):
         self.page.plots["alpha"].legend    .set(a=2)
@@ -185,10 +289,10 @@ class TestOptionsResolving(unittest.TestCase):
  
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+        self.assertEqual(resolved[self.plot.legend]["a"], 2)
+        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
     
 
 if __name__ == "__main__":
