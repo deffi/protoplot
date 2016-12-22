@@ -81,44 +81,58 @@ class Item(metaclass=ItemMetaclass):
         '''
         self.options.set(**kwargs)
 
-    def applicable_templates(self, container):
-        result = []
-        
-        # The templates of the class are applicable in any case 
-        result += type(self).matching_templates(self.tags)
-        
-        # The templates of the container - if we have one - are also applicable
-        if container is not None:
-            result += container.matching_templates(self.tags)
-        
-        return result
-
-    def resolve_own_options(self, applicable_templates):
-        # Apply the options from the templates and from this instance (in this
-        # order, so the options from this instance take precedence).
-        result = {}
-        for item in applicable_templates + [self]:
-            result.update(item.options.values)
-            
-        return result
-
-    def resolve_options(self, parent = None, container = None):
+    def resolve_options(self, templates = None, indent="", verbose = False):
+        def p(*args, **kwargs):
+            if verbose:
+                print(indent, *args, **kwargs)
+                
         # TODO do we need parent here? Probably for inheriting.
-        result = {}
 
-        # The templates that we have to consider in parallel to this instance
-        applicable_templates = self.applicable_templates(container)
+        p("Resolve options for", self)
+        p("* Templates:", templates)
+        p("* Tags:", self.tags)
 
-        # Add the options for self
-        result[self] = self.resolve_own_options(applicable_templates)
+        # Determine the applicable templates: the ones kindly selected by our
+        # parent, plus the matching templates from our own class.  
+        templates = templates or []
+        templates = templates + type(self).matching_templates(self.tags) 
 
-        # Recursively add the options for each child
+        # Determine the options for self
+        own_options = {}
+        for template in templates + [self]:
+            own_options.update(template.options.values)
+        #print(indent+"* Own options: {}".format(own_options))
+
+        # Determine the options for direct children (recursively)
+        children_options = {}
         for name, child in self.children():
-            result.update(child.resolve_options())
+            p("* Child", name)
+            child_templates = [
+                getattr(template, name)
+                for template in templates
+            ]
+            children_options.update(child.resolve_options(child_templates, indent = indent+"  ", verbose = verbose ))
 
-        # Recursively add the options for each container
+        # Determine the options for children in containers (recursively)
+        containers_options = {}
         for name, container in self.containers():
-            for item in container.items:
-                result.update(item.resolve_options(container = container))
+            p("* Container", name, container)
+            template_containers = [
+                getattr(template, name)
+                for template in templates + [self]
+            ]
+            p("* Template_containers", template_containers)
+            
+            for child in container.items:
+                # Select the matching templates for the child
+                child_templates = []
+                for container in template_containers:
+                    child_templates += container.matching_templates(child.tags) 
+                
+                containers_options.update(child.resolve_options(child_templates, indent = indent+"  ", verbose = verbose))
         
+        result = {}
+        result[self] = own_options
+        result.update(children_options)
+        result.update(containers_options)
         return result

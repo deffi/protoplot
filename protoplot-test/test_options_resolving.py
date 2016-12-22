@@ -55,62 +55,62 @@ class TestOptionsResolving(unittest.TestCase):
     def testNotSet(self):
         # TODO must be at the default value
         pass
-
+ 
     def testSpecific(self):
         self.plot                .set(a=1)
         self.plot.legend         .set(a=2)
         self.plot.series.items[0].set(a=3)
         self.plot.series.items[1].set(a=4)
         self.plot.series.items[2].set(a=5)
-
+ 
         resolved = self.plot.resolve_options()
-
+ 
         self.assertEqual(resolved[self.plot                ]["a"], 1)
         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 4)
         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 5)
-        
- 
+         
+  
     def testClassTemplateAll(self):
         self.Plot  .all.set(a=1)
         self.Series.all.set(a=2)
         self.Legend.all.set(a=3)
- 
+  
         resolved = self.plot.resolve_options()
-
+ 
         self.assertEqual(resolved[self.plot                ]["a"], 1)
         self.assertEqual(resolved[self.plot.legend         ]["a"], 3)
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
- 
+  
     def testClassTemplateByTag(self):
         self.Series["one"].set(a=1)
         self.Series["two"].set(a=2)
-
+ 
         resolved = self.plot.resolve_options()
-
+ 
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
         # TODO in case both tags match, which one is effective?
         self.assertIn   (resolved[self.plot.series.items[2]]["a"], [1, 2]) # one,two
-    
+     
     def testContainerTemplateAll(self):
         self.plot.series.all.set(a=2)
- 
+  
         resolved = self.plot.resolve_options()
-
+ 
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2)
         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 2)
-    
+     
     def testContainerTemplateByTag(self):
         self.plot.series["one"].set(a=1)
         self.plot.series["two"].set(a=2)
-
+ 
         resolved = self.plot.resolve_options()
-
+ 
         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 1) # one
         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 2) # two
         # TODO in case both tags match, which one is effective?
@@ -124,29 +124,29 @@ class TestOptionsResolving(unittest.TestCase):
     def testAncestorClassTemplateAll(self):
         self.Plot.all.legend    .set(a=2)
         self.Plot.all.series.all.set(a=3)
-
+ 
         resolved = self.plot.resolve_options()
-
-#         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-#         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-#         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-#         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
-
+ 
+        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+ 
     def testAncesterClassTemplateByTag(self):
         self.Plot["alpha"].legend    .set(a=2)
         self.Plot["alpha"].series.all.set(a=3)
-
+ 
         resolved = self.plot.resolve_options()
-
-#         self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
-#         self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
-#         self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
-#         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
-
+ 
+        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
+ 
     def testAncestorContainerTemplateAll(self):
         # page.plots.all.legend.set(...)
         pass
-
+ 
     def testAncestorContainerTemplateByTag(self):
         # page.plots[...].legend.set(...)
         pass
