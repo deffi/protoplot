@@ -9,13 +9,6 @@ class TestOptionsResolving(unittest.TestCase):
     ##################
     
     def setUp(self):
-        class Legend(Item):
-            def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
-                self.options.register("a", True)  # Inherit
-                self.options.register("b", False) # Same name, don't inherit
-                self.options.register("e", False) # Different name
-        
         class Series(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
@@ -23,6 +16,13 @@ class TestOptionsResolving(unittest.TestCase):
                 self.options.register("b", False) # Same name, don't inherit
                 self.options.register("d", False) # Different name
 
+        class Legend(Item):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.options.register("a", True)  # Inherit
+                self.options.register("b", False) # Same name, don't inherit
+                self.options.register("e", False) # Different name
+        
         class Plot(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
@@ -38,21 +38,39 @@ class TestOptionsResolving(unittest.TestCase):
                 super().__init__(*args, **kwargs)
                 self.plots = ItemContainer(Plot)
 
+        # Create instances
         page=Page()                
         plot=page.plots.add(tag="alpha")
-        plot.series.add(tag="one")
-        plot.series.add(tag="two")
-        plot.series.add(tag="one,two")
+        series=[
+            plot.series.add(tag="one"),
+            plot.series.add(tag="two"),
+            plot.series.add(tag="one,two"),
+        ]
  
+        # Store the classes in the test
+        self.Page   = Page
+        self.Plot   = Plot
         self.Legend = Legend
-        self.Plot = Plot
         self.Series = Series
 
-        self.page = page        
-        self.plot = plot
+        # Store the instances in the test
+        self.page   = page        
+        self.plot   = plot
+        self.series = series
 
     def tearDown(self):
         pass
+
+
+    #####################
+    ## Object identity ##
+    #####################
+
+    def testObjectIdentity(self):
+        self.assertIs(self.plot     , self.page.plots.items[0])
+        self.assertIs(self.series[0], self.plot.series.items[0])
+        self.assertIs(self.series[1], self.plot.series.items[1])
+        self.assertIs(self.series[2], self.plot.series.items[2])
 
 
     ###################
