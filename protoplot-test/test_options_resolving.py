@@ -33,7 +33,13 @@ class TestOptionsResolving(unittest.TestCase):
                 self.series = ItemContainer(Series)
                 self.legend = Legend()
  
-        plot=Plot(tag="alpha")
+        class Page(Item):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.plots = ItemContainer(Plot)
+
+        page=Page()                
+        plot=page.plots.add(tag="alpha")
         plot.series.add(tag="one")
         plot.series.add(tag="two")
         plot.series.add(tag="one,two")
@@ -41,7 +47,8 @@ class TestOptionsResolving(unittest.TestCase):
         self.Legend = Legend
         self.Plot = Plot
         self.Series = Series
-        
+
+        self.page = page        
         self.plot = plot
 
     def tearDown(self):
@@ -144,12 +151,26 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
  
     def testAncestorContainerTemplateAll(self):
-        # page.plots.all.legend.set(...)
-        pass
+        self.page.plots.all.legend    .set(a=2)
+        self.page.plots.all.series.all.set(a=3)
+
+        resolved = self.page.resolve_options()
+ 
+        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
  
     def testAncestorContainerTemplateByTag(self):
-        # page.plots[...].legend.set(...)
-        pass
+        self.page.plots["alpha"].legend    .set(a=2)
+        self.page.plots["alpha"].series.all.set(a=3)
+ 
+        resolved = self.page.resolve_options()
+ 
+        self.assertEqual(resolved[self.plot.legend         ]["a"], 2)
+        self.assertEqual(resolved[self.plot.series.items[0]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[1]]["a"], 3)
+        self.assertEqual(resolved[self.plot.series.items[2]]["a"], 3)
     
 
 if __name__ == "__main__":
