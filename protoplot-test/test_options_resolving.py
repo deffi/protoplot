@@ -4,6 +4,61 @@ from protoplot.engine.item import Item
 from protoplot.engine.item_container import ItemContainer
 
 class TestOptionsResolving(unittest.TestCase):
+    '''
+    The model looks like this:
+        page            (Page)
+        '- plots...        (ItemContainer with Plot)
+           |- legend          (Legend)
+           '- series...       (ItemContainer with Series)
+ 
+    To set options for an item (page, plot, legend, or series), we select it
+    by starting either with a class template or an instance. We then select
+    children directly (legend) or via container template (plots, series). A
+    class template or container template is selected either by (class or
+    container)["..."] or by (class or container).all.   
+    
+    These are the possible ways to set options for series:
+        Page.all.plots.all.series.all.set(...)
+        my_page .plots.all.series.all.set(...)
+                 Plot .all.series.all.set(...)
+                 my_plot  .series.all.set(...)
+                           Series.all.set(...)
+                           my_series .set(...)
+    For legend:
+        Page.all.plots.all.legend.set(...)
+        my_page .plots.all.legend.set(...)
+                 Plot .all.legend.set(...)
+                 my_plot  .legend.set(...)
+                           Legend.all.set(...)
+                           my_legend .set(...) - Same as my_plot.legend 
+    For plot:
+        Page.all.plots.all.set(...)
+        my_page .plots.all.set(...)
+                 Plot .all.set(...)
+                 my_plot  .set(...)
+    For page:
+        Page.all.set(...)
+        my_page .set(...)
+    
+    We use the following tree for the test (with tags in parentheses):
+        page                             self.page
+        '- plots
+           |- plot (alpha)               self.plots[0]
+           |  |- legend                  self.legends[0]
+           |  '- series
+           |     |- series (one)         self.series[0][0]
+           |     |- series (two)         self.series[0][1]
+           |     '- series (one, two)    self.series[0][2]
+           '- plot (beta)                self.plots[1]
+              |- legend                  self.legends[1]
+              '- series
+                 |- series (one)         self.series[1][0]
+                 |- series (two)         self.series[1][1]
+                 '- series (one, two)    self.series[1][2]
+    '''
+
+    # TODO there should be a test for option priorities
+
     ##################
     ## Test fixture ##
     ##################
@@ -44,12 +99,25 @@ class TestOptionsResolving(unittest.TestCase):
 
         # Create instances
         page=Page()                
-        plot=page.plots.add(tag="alpha")
-        legend=plot.legend
+        plots=[
+            page.plots.add(tag="alpha"),
+            page.plots.add(tag="beta" ),
+        ]
+        legends=[
+            plots[0].legend,
+            plots[1].legend,
+        ]
         series=[
-            plot.series.add(tag="one"),
-            plot.series.add(tag="two"),
-            plot.series.add(tag="one,two"),
+            [
+                plots[0].series.add(tag="one"),
+                plots[0].series.add(tag="two"),
+                plots[0].series.add(tag="one,two"),
+            ],
+            [
+                plots[1].series.add(tag="one"),
+                plots[1].series.add(tag="two"),
+                plots[1].series.add(tag="one,two"),
+            ]
         ]
  
         # Store the classes in the test case
@@ -59,10 +127,10 @@ class TestOptionsResolving(unittest.TestCase):
         self.Series = Series
 
         # Store the instances in the test case
-        self.page   = page        
-        self.plot   = plot
-        self.legend = legend
-        self.series = series
+        self.page    = page        
+        self.plots   = plots
+        self.legends = legends
+        self.series  = series
 
     def tearDown(self):
         pass
@@ -75,59 +143,135 @@ class TestOptionsResolving(unittest.TestCase):
     def testObjectIdentity(self):
         # We store some objects in the test case - make sure that they are
         # identical to the correct items in the tree.
-        self.assertIs(self.plot     , self.page.plots.items[0])
-        self.assertIs(self.legend   , self.plot.legend)
-        self.assertIs(self.series[0], self.plot.series.items[0])
-        self.assertIs(self.series[1], self.plot.series.items[1])
-        self.assertIs(self.series[2], self.plot.series.items[2])
+        self.assertIs(self.plots[0]    , self.page.plots.items[0])
+        self.assertIs(self.plots[1]    , self.page.plots.items[1])
+        self.assertIs(self.legends[0]  , self.plots[0].legend)
+        self.assertIs(self.legends[1]  , self.plots[1].legend)
+        self.assertIs(self.series[0][0], self.plots[0].series.items[0])
+        self.assertIs(self.series[0][1], self.plots[0].series.items[1])
+        self.assertIs(self.series[0][2], self.plots[0].series.items[2])
+        self.assertIs(self.series[1][0], self.plots[1].series.items[0])
+        self.assertIs(self.series[1][1], self.plots[1].series.items[1])
+        self.assertIs(self.series[1][2], self.plots[1].series.items[2])
 
 
     #####################
-    ## Setting options ##
+    ## Default options ##
     #####################
+
+    # If no options have been set, all options must have their default value.
+
+    def testNotSet(self):
+        resolved = self.page.resolve_options()
+
+        # TODO implement default option values
+#         self.assertEqual(resolved[self.page]["a"], "default")
+# 
+#         self.assertEqual(resolved[self.plots[0]]["a"], "default")
+#         self.assertEqual(resolved[self.plots[1]]["a"], "default")
+# 
+#         self.assertEqual(resolved[self.legends[0]]["a"], "default")
+#         self.assertEqual(resolved[self.legends[1]]["a"], "default")
+# 
+#         self.assertEqual(resolved[self.series[0][0]]["a"], "default")
+#         self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+#         self.assertEqual(resolved[self.series[0][2]]["a"], "default")
+#         self.assertEqual(resolved[self.series[1][0]]["a"], "default")
+#         self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+#         self.assertEqual(resolved[self.series[1][2]]["a"], "default")
     
-    # The model looks like this:
-    #     page
-    #     '- plots...
-    #        |- legend
-    #        '- series...
+ 
+    ##################################
+    ## Setting options via instance ##
+    ##################################
 
-    # To set options for an item (page, plot, legend, or series), we select it
-    # by starting either with a class template or an instance. We then select
-    # children directly (legend) or via container template (plots, series). A
-    # class template or container template is selected either by (class or
-    # container)["..."] or by (class or container).all.   
+    # This is the most basic case, starting from an instance and selecting the
+    # children via their containers. Note that we only use the default selector
+    # (.all) here - we test tag selectors in another section. Also, there is a
+    # shortcut that allows us to call .set directly on a container or a class -
+    # we also test that in a separate section.
     #
-    # These are the possible ways to set options for series:
-    #     Page.all.plots.all.series.all.set(...)
-    #     my_page .plots.all.series.all.set(...)
-    #              Plot .all.series.all.set(...)
-    #              my_plot  .series.all.set(...)
-    #                        Series.all.set(...)
-    #                        my_series .set(...)
-    # For legend:
-    #     Page.all.plots.all.legend.set(...)
-    #     my_page .plots.all.legend.set(...)
-    #              Plot .all.legend.set(...)
-    #              my_plot  .legend.set(...)
-    #                        Legend.all.set(...)
-    #                        my_legend .set(...) - Same as my_plot.legend 
-    # For plot:
-    #     Page.all.plots.all.set(...)
-    #     my_page .plots.all.set(...)
-    #              Plot .all.set(...)
-    #              my_plot  .set(...)
-    # For page:
-    #     Page.all.set(...)
-    #     my_page .set(...)
-    #
-    # We can only test a item once per test, so we group the cases by how they
+    # We can only use each item once per test, so we group the cases by how they
     # start, not by how they end (i. e. what is accessed).
-    #
-    # Note that we only use the default selector (.all) here - we use tag
-    # selectors in the next section. Also, there is a shortcut that allows us
-    # to call .set directly on a container or a class - we also test that in a
-    # separate section.
+
+    def testOptionsViaPageInstance(self):
+        self.page                     .set(a=1)
+        self.page.plots.all           .set(a=2)
+        self.page.plots.all.legend    .set(a=3)
+        self.page.plots.all.series.all.set(a=4)
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.page        ]["a"], 1)
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 2)
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 2)
+        self.assertEqual(resolved[self.legends[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.legends[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[0][0]]["a"], 4)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 4)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 4)
+
+    def testOptionsViaPlotInstance(self):
+        self.plots[0]           .set(a=1)
+        self.plots[0].legend    .set(a=2)
+        self.plots[0].series.all.set(a=3)
+        self.plots[1]           .set(a=4)
+        self.plots[1].legend    .set(a=5)
+        self.plots[1].series.all.set(a=6)
+  
+        resolved = self.page.resolve_options()
+
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 1)
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 4)
+        self.assertEqual(resolved[self.legends[0]  ]["a"], 2)
+        self.assertEqual(resolved[self.legends[1]  ]["a"], 5)
+        self.assertEqual(resolved[self.series[0][0]]["a"], 3)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 3)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 3)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 6)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 6)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 6)
+
+    def testOptionsViaLegendInstance(self):
+        self.legends[0].set(a=1)
+        self.legends[1].set(a=2)
+        
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.legends[0]]["a"], 1)
+        self.assertEqual(resolved[self.legends[1]]["a"], 2)
+    
+    def testOptionsViaSeriesInstance(self):
+        self.series[0][0].set(a=1)
+        self.series[0][1].set(a=2)
+        self.series[0][2].set(a=3)
+        self.series[1][0].set(a=4)
+        self.series[1][1].set(a=5)
+        self.series[1][2].set(a=6)
+        
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 2)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 3)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 5)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 6)
+
+    
+    ###############################
+    ## Setting options via class ##
+    ###############################
+
+    # This is the case where we start from a class instance to select all
+    # instances of this class using the default selector (.all; again, selection
+    # by tag is tested in another section). Since we only test test the default
+    # selector (.all), there is only one set call per test, even for plots and
+    # series, where we have multiple instances and where there were multiple set
+    # calls in the "via instance" section.
 
     def testOptionsViaPageClass(self):
         self.Page.all.set                     (a=1)
@@ -137,27 +281,17 @@ class TestOptionsResolving(unittest.TestCase):
 
         resolved = self.page.resolve_options()
 
-        self.assertEqual(resolved[self.page     ]["a"], 1)
-        self.assertEqual(resolved[self.plot     ]["a"], 2)
-        self.assertEqual(resolved[self.legend   ]["a"], 3)
-        self.assertEqual(resolved[self.series[0]]["a"], 4)
-        self.assertEqual(resolved[self.series[1]]["a"], 4)
-        self.assertEqual(resolved[self.series[2]]["a"], 4)
-    
-    def testOptionsViaPageInstance(self):
-        self.page                     .set(a=1)
-        self.page.plots.all           .set(a=2)
-        self.page.plots.all.legend    .set(a=3)
-        self.page.plots.all.series.all.set(a=4)
-
-        resolved = self.page.resolve_options()
-        
-        self.assertEqual(resolved[self.page     ]["a"], 1)
-        self.assertEqual(resolved[self.plot     ]["a"], 2)
-        self.assertEqual(resolved[self.legend   ]["a"], 3)
-        self.assertEqual(resolved[self.series[0]]["a"], 4)
-        self.assertEqual(resolved[self.series[1]]["a"], 4)
-        self.assertEqual(resolved[self.series[2]]["a"], 4)
+        self.assertEqual(resolved[self.page        ]["a"], 1)
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 2)
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 2)
+        self.assertEqual(resolved[self.legends[0]  ]["a"], 3)
+        self.assertEqual(resolved[self.legends[1]  ]["a"], 3)
+        self.assertEqual(resolved[self.series[0][0]]["a"], 4)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 4)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 4)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 4)
     
     def testOptionsViaPlotClass(self):
         self.Plot.all           .set(a=1)
@@ -166,131 +300,208 @@ class TestOptionsResolving(unittest.TestCase):
 
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.plot     ]["a"], 1)
-        self.assertEqual(resolved[self.legend   ]["a"], 2)
-        self.assertEqual(resolved[self.series[0]]["a"], 3)
-        self.assertEqual(resolved[self.series[1]]["a"], 3)
-        self.assertEqual(resolved[self.series[2]]["a"], 3)
-    
-    def testOptionsViaPlotInstance(self):
-        self.plot           .set(a=1)
-        self.plot.legend    .set(a=2)
-        self.plot.series.all.set(a=3)
-  
-        resolved = self.page.resolve_options()
-
-        self.assertEqual(resolved[self.plot     ]["a"], 1)
-        self.assertEqual(resolved[self.legend   ]["a"], 2)
-        self.assertEqual(resolved[self.series[0]]["a"], 3)
-        self.assertEqual(resolved[self.series[1]]["a"], 3)
-        self.assertEqual(resolved[self.series[2]]["a"], 3)
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 1)
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 1)
+        self.assertEqual(resolved[self.legends[0]  ]["a"], 2)
+        self.assertEqual(resolved[self.legends[1]  ]["a"], 2)
+        self.assertEqual(resolved[self.series[0][0]]["a"], 3)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 3)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 3)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 3)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 3)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 3)
     
     def testOptionsViaLegendClass(self):
         self.Legend.all.set(a=1)
         
         resolved = self.page.resolve_options()
         
-        self.assertEqual(resolved[self.legend]["a"], 1)
-    
-    def testOptionsViaLegendInstance(self):
-        self.legend.set(a=1)
-        
-        resolved = self.page.resolve_options()
-        
-        self.assertEqual(resolved[self.legend]["a"], 1)
+        self.assertEqual(resolved[self.legends[0]]["a"], 1)
+        self.assertEqual(resolved[self.legends[1]]["a"], 1)
     
     def testOptionsViaSeriesClass(self):
         self.Series.all.set(a=1)
 
         resolved = self.page.resolve_options()
  
-        self.assertEqual(resolved[self.series[0]  ]["a"], 1)
-        self.assertEqual(resolved[self.series[1]  ]["a"], 1)
-        self.assertEqual(resolved[self.series[2]  ]["a"], 1)
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 1)
     
-    def testOptionsViaSeriesInstance(self):
-        self.series[0]  .set(a=1)
-        self.series[1]  .set(a=2)
-        self.series[2]  .set(a=3)
+    
+    ###############################
+    ## Selectors - .all shortcut ##
+    ###############################
+
+    # Make sure that .all is the same as [""] for both classes and containers.
+
+    def testSelectors_allShortcut(self):
+        # Classes
+        self.assertIs(self.Page  .all, self.Page  [""])
+        self.assertIs(self.Plot  .all, self.Plot  [""])
+        self.assertIs(self.Legend.all, self.Legend[""])
+        self.assertIs(self.Series.all, self.Series[""])
         
-        resolved = self.page.resolve_options()
-        
-        self.assertEqual(resolved[self.series[0]  ]["a"], 1)
-        self.assertEqual(resolved[self.series[1]  ]["a"], 2)
-        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
+        # Containers
+        self.assertIs(self.page    .plots .all, self.page    .plots [""])
+        self.assertIs(self.plots[0].series.all, self.plots[0].series[""])
+        self.assertIs(self.plots[1].series.all, self.plots[1].series[""])
 
 
-    ###############
-    ## Selectors ##
-    ###############
+    ###########################
+    ## Selectors - container ##
+    ###########################
 
     # Test non-default selectors, i. e. ["..."] instead of (and in conjunction
     # with) the default selector (.all). Also make sure that [""] is the same
     # as .all.
+    #
+    # We first start at a container (specifically, the plots container in the
+    # page instance) and select series in the plots using all combinations of
+    # the default selector and tag selectors: no tag selectors (only default
+    # selectors), tag selector for plots, tag selector for series, and tag
+    # selectors for plots and series.
+    #
+    # In each case, we test that the option of the selected series was indeed
+    # set, and that the one for the non-selected series are not selected (i. e.
+    # are at their default value - TODO implement this).
+    
+    def testSelectors_container_none(self):
+        self.page.plots.all.series.all.set(a=1)
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 1)
+
+    def testSelectors_container_plot(self):
+        self.page.plots["alpha"].series.all.set(a=1)
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+
+    def testSelectors_container_series(self):
+        self.page.plots.all.series["one"].set(a=1)
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][2]]["a"], 1)
+
+    def testSelectors_container_plotAndSeries(self):
+        self.page.plots["alpha"].series["one"].set(a=1)
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+
+
+    #######################
+    ## Selectors - class ##
+    #######################
+
+    # Same as before, but we start at the Plot class instead of the plots
+    # container in the page instance.
+
+    def testSelectors_class_none(self):
+        self.Plot.all.series.all.set(a=1)
+ 
+        resolved = self.page.resolve_options()
+         
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][2]]["a"], 1)
+
+    def testSelectors_class_plot(self):
+        self.Plot["alpha"].series.all.set(a=1)
+ 
+        resolved = self.page.resolve_options()
+         
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][1]]["a"], 1)
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+
+    def testSelectors_class_series(self):
+        self.Plot.all.series["one"].set(a=1)
+ 
+        resolved = self.page.resolve_options()
+         
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        self.assertEqual(resolved[self.series[1][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][2]]["a"], 1)
+
+    def testSelectors_class_plotAndSeries(self):
+        self.Plot["alpha"].series["one"].set(a=1)
+ 
+        resolved = self.page.resolve_options()
+         
+        self.assertEqual(resolved[self.series[0][0]]["a"], 1)
+        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][2]]["a"], 1)
+        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
 
     
     ###############
     ## Shortcuts ##
     ###############
     
-    # Plot.set(...) for Plot.all.set(...)
-    # my_plot.series(...) for my_plot.series.all.set(...)
-
-
-    ###################
-    ## Single source ##
-    ###################
-
-    # TODO more systematic
-
-    def testNotSet(self):
-        # TODO must be at the default value
-        pass
- 
-    def testClassTemplateByTag(self):
-        self.Series["one"].set(a=1)
-        self.Series["two"].set(a=2)
- 
-        resolved = self.page.resolve_options()
- 
-        self.assertEqual(resolved[self.series[0]]["a"], 1) # one
-        self.assertEqual(resolved[self.series[1]]["a"], 2) # two
-        # TODO in case both tags match, which one is effective?
-        self.assertIn   (resolved[self.series[2]]["a"], [1, 2]) # one,two
-     
-    def testContainerTemplateByTag(self):
-        self.plot.series["one"].set(a=1)
-        self.plot.series["two"].set(a=2)
- 
-        resolved = self.page.resolve_options()
- 
-        self.assertEqual(resolved[self.series[0]]["a"], 1) # one
-        self.assertEqual(resolved[self.series[1]]["a"], 2) # two
-        # TODO in case both tags match, which one is effective?
-        self.assertIn   (resolved[self.series[2]]["a"], [1, 2]) # one,two
-
-    def testAncesterClassTemplateByTag(self):
-        self.Plot["alpha"].legend    .set(a=2)
-        self.Plot["alpha"].series.all.set(a=3)
- 
-        resolved = self.page.resolve_options()
- 
-        self.assertEqual(resolved[self.plot.legend]["a"], 2)
-        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
-        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
-        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
- 
-    def testAncestorContainerTemplateByTag(self):
-        self.page.plots["alpha"].legend    .set(a=2)
-        self.page.plots["alpha"].series.all.set(a=3)
- 
-        resolved = self.page.resolve_options()
- 
-        self.assertEqual(resolved[self.plot.legend]["a"], 2)
-        self.assertEqual(resolved[self.series[0]  ]["a"], 3)
-        self.assertEqual(resolved[self.series[1]  ]["a"], 3)
-        self.assertEqual(resolved[self.series[2]  ]["a"], 3)
+    # Both item classes and item containers offer a shortcut that allows use to
+    # use
+    #     Plot.set(...)
+    #     page.plots.set(...)
+    # instead of
+    #     Plot.all.set(...)
+    #     page.plots.all.set(...)
     
+    def testSetShortcutContainer(self):
+        self.page.plots.set(a=2) # Shortcut for self.page.plots.all.set
+
+        resolved = self.page.resolve_options()
+        
+        self.assertEqual(resolved[self.plots[0]]["a"], 2)
+        self.assertEqual(resolved[self.plots[1]]["a"], 2)
+
+    def testSetShorcutClass(self):
+        self.Plot.set(a=1) # Shortcut for self.Plot.all.set
+
+        resolved = self.page.resolve_options()
+ 
+        self.assertEqual(resolved[self.plots[0]]["a"], 1)
+        self.assertEqual(resolved[self.plots[1]]["a"], 1)
+            
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
