@@ -2,6 +2,17 @@ from protoplot.engine.options_container import OptionsContainer
 from protoplot.engine.tag import make_tags_list
 from protoplot.engine.item_metaclass import ItemMetaclass  # @UnusedImport
 from protoplot.engine.item_container import ItemContainer
+
+# TODO options should be resolved in the proper order. Here's the proposed
+# resulting order for series:
+#                            my_series .set(...)
+#                  my_plot  .series.all.set(...)
+#         my_page .plots.all.series.all.set(...)
+#         Page.all.plots.all.series.all.set(...)
+#                  Plot .all.series.all.set(...)
+#                            Series.all.set(...)
+# For testability, a resolved option should store probably store a complete list
+# of values in order of priority.
  
 class Item(metaclass=ItemMetaclass):
     '''
@@ -131,7 +142,7 @@ class Item(metaclass=ItemMetaclass):
                     child_templates += container.matching_templates(child.tags) 
                 
                 containers_options.update(child.resolve_options(child_templates, indent = indent+"  ", verbose = verbose))
-        
+
         result = {}
         result[self] = own_options
         result.update(children_options)

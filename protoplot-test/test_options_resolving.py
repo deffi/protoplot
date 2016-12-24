@@ -57,8 +57,6 @@ class TestOptionsResolving(unittest.TestCase):
                  '- series (one, two)    self.series[1][2]
     '''
 
-    # TODO there should be a test for option priorities
-
     ##################
     ## Test fixture ##
     ##################
