@@ -1,7 +1,6 @@
 import unittest
 
 from protoplot.engine.options_container import OptionsContainer
-from numpy.ma.testutils import assert_equal
 
 class OptionsContainerTest(unittest.TestCase):
     def testOptionsContainer(self):
@@ -10,11 +9,11 @@ class OptionsContainerTest(unittest.TestCase):
         self.assertEqual(len(oc), 0)
         
         # Register some options
-        oc.register("color"    , True)
+        oc.register("color"    , True , "black")
         self.assertEqual(len(oc), 1)
-        oc.register("lineWidth", False)
+        oc.register("lineWidth", False, 1)
         self.assertEqual(len(oc), 2)
-        oc.register("lineStyle", False)
+        oc.register("lineStyle", False, "solid")
 
         # Define another OC
         oc2 = OptionsContainer(oc)
@@ -36,6 +35,12 @@ class OptionsContainerTest(unittest.TestCase):
         oc2.set(color="green")
         self.assertEqual(oc2.values, {"color": "green"})
 
+        # Verify the defaults
+        self.assertEqual(oc.defaultValues(), {
+            "color"    : "black",
+            "lineWidth": 1,
+            "lineStyle": "solid",
+        })
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

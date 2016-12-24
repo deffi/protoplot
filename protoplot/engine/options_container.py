@@ -1,9 +1,10 @@
 import warnings
 
 class _Entry:
-    def __init__(self, name, inherit):
-        self.name    = name
-        self.inherit = inherit
+    def __init__(self, name, inherit, defaultValue):
+        self.name         = name
+        self.inherit      = inherit
+        self.defaultValue = defaultValue
 
 class OptionsContainer():
     '''
@@ -19,8 +20,8 @@ class OptionsContainer():
             self.entries = other.entries
         self.values = {}
 
-    def register(self, name, inherit):
-        self.entries[name] = _Entry(name, inherit)
+    def register(self, name, inherit, defaultValue = None):
+        self.entries[name] = _Entry(name, inherit, defaultValue)
 
     def set(self, **args):
         for key, value in args.items():
@@ -28,6 +29,9 @@ class OptionsContainer():
                 warnings.warn("Setting unknown option {}".format(key))
             
             self.values[key] = value
+
+    def defaultValues(self):
+        return { entry.name: entry.defaultValue for entry in self.entries.values() }
 
     def __len__(self):
         return len(self.entries)
