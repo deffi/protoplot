@@ -62,7 +62,7 @@ class Test(unittest.TestCase):
     def testChildren(self):
         plot = self.Plot()
         
-        self.assertEqual(plot.children(), [plot.legend])
+        self.assertEqual(plot.children(), [("legend", plot.legend)])
     
     def testContainers(self):
         # TODO implement
