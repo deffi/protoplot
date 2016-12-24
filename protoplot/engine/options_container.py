@@ -1,10 +1,10 @@
 import warnings
 
 class _Entry:
-    def __init__(self, name, inherit, defaultValue):
-        self.name         = name
-        self.inherit      = inherit
-        self.defaultValue = defaultValue
+    def __init__(self, name, inherit, default_value):
+        self.name          = name
+        self.inherit       = inherit
+        self.default_value = default_value
 
 class OptionsContainer():
     '''
@@ -20,8 +20,8 @@ class OptionsContainer():
             self.entries = other.entries
         self.values = {}
 
-    def register(self, name, inherit, defaultValue = None):
-        self.entries[name] = _Entry(name, inherit, defaultValue)
+    def register(self, name, inherit, default_value = None):
+        self.entries[name] = _Entry(name, inherit, default_value)
 
     def set(self, **args):
         for key, value in args.items():
@@ -30,8 +30,8 @@ class OptionsContainer():
             
             self.values[key] = value
 
-    def defaultValues(self):
-        return { entry.name: entry.defaultValue for entry in self.entries.values() }
+    def default_values(self):
+        return { entry.name: entry.default_value for entry in self.entries.values() }
 
     def __len__(self):
         return len(self.entries)

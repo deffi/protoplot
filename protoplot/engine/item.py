@@ -99,7 +99,7 @@ class Item(metaclass=ItemMetaclass):
 
         # Determine the options for self
         own_options = {}
-        own_options.update(self.options.defaultValues())
+        own_options.update(self.options.default_values())
         for template in templates + [self]:
             own_options.update(template.options.values)
         #print(indent+"* Own options: {}".format(own_options))
