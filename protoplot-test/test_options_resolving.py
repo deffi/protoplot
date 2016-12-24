@@ -67,23 +67,23 @@ class TestOptionsResolving(unittest.TestCase):
         class Series(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self.options.register("a", True)  # Inherit
-                self.options.register("b", False) # Same name, don't inherit
-                self.options.register("d", False) # Different name
+                self.options.register("a", True , "defaultA") # Inherit
+                self.options.register("b", False, "defaultB") # Same name, don't inherit
+                self.options.register("d", False, "defaultD") # Different name
 
         class Legend(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self.options.register("a", True)  # Inherit
-                self.options.register("b", False) # Same name, don't inherit
-                self.options.register("e", False) # Different name
+                self.options.register("a", True , "defaultA") # Inherit
+                self.options.register("b", False, "defaultB") # Same name, don't inherit
+                self.options.register("e", False, "defaultE") # Different name
         
         class Plot(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self.options.register("a", False)
-                self.options.register("b", False)
-                self.options.register("c", False)
+                self.options.register("a", False, "defaultA")
+                self.options.register("b", False, "defaultB")
+                self.options.register("c", False, "defaultC")
  
                 self.series = ItemContainer(Series)
                 self.legend = Legend()
@@ -91,9 +91,9 @@ class TestOptionsResolving(unittest.TestCase):
         class Page(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self.options.register("a", False)
-                self.options.register("b", False)
-                self.options.register("c", False)
+                self.options.register("a", False, "defaultA")
+                self.options.register("b", False, "defaultB")
+                self.options.register("c", False, "defaultC")
 
                 self.plots = ItemContainer(Plot)
 
@@ -164,21 +164,20 @@ class TestOptionsResolving(unittest.TestCase):
     def testNotSet(self):
         resolved = self.page.resolve_options()
 
-        # TODO implement default option values
-#         self.assertEqual(resolved[self.page]["a"], "default")
-# 
-#         self.assertEqual(resolved[self.plots[0]]["a"], "default")
-#         self.assertEqual(resolved[self.plots[1]]["a"], "default")
-# 
-#         self.assertEqual(resolved[self.legends[0]]["a"], "default")
-#         self.assertEqual(resolved[self.legends[1]]["a"], "default")
-# 
-#         self.assertEqual(resolved[self.series[0][0]]["a"], "default")
-#         self.assertEqual(resolved[self.series[0][1]]["a"], "default")
-#         self.assertEqual(resolved[self.series[0][2]]["a"], "default")
-#         self.assertEqual(resolved[self.series[1][0]]["a"], "default")
-#         self.assertEqual(resolved[self.series[1][1]]["a"], "default")
-#         self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+        self.assertEqual(resolved[self.page]["a"], "defaultA")
+ 
+        self.assertEqual(resolved[self.plots[0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.plots[1]]["a"], "defaultA")
+ 
+        self.assertEqual(resolved[self.legends[0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.legends[1]]["a"], "defaultA")
+ 
+        self.assertEqual(resolved[self.series[0][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[0][2]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
     
  
     ##################################
@@ -367,7 +366,7 @@ class TestOptionsResolving(unittest.TestCase):
     #
     # In each case, we test that the option of the selected series was indeed
     # set, and that the one for the non-selected series are not selected (i. e.
-    # are at their default value - TODO implement this).
+    # are at their default value).
     
     def testSelectors_container_none(self):
         self.page.plots.all.series.all.set(a=1)
@@ -389,9 +388,9 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
         self.assertEqual(resolved[self.series[0][1]]["a"], 1)
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
     def testSelectors_container_series(self):
         self.page.plots.all.series["one"].set(a=1)
@@ -399,10 +398,10 @@ class TestOptionsResolving(unittest.TestCase):
         resolved = self.page.resolve_options()
         
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
         self.assertEqual(resolved[self.series[1][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[1][2]]["a"], 1)
 
     def testSelectors_container_plotAndSeries(self):
@@ -411,11 +410,11 @@ class TestOptionsResolving(unittest.TestCase):
         resolved = self.page.resolve_options()
         
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
 
     #######################
