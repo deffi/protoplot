@@ -1,51 +1,59 @@
 #!/usr/bin/env python3
+
+import warnings
  
-from plotlib import Plot, Series, excel, LogFormatter
+from protoplot import Plot, Series #, excel, LogFormatter
+from protoplot.util import excel
 
 x = range(0, 512+1, 16)
 y = [4e-4 + 2e-4 * (xx/512) for xx in x]
 
 plot = Plot()
-plot.options(xlabel='Horizontal', ylabel='Vertical')
-plot.options(xlim=[0, 512+1], ylim=[3e-4, 8e-4])
-plot.options(xticks=range(0, 512+1, 64))
-plot.options(ylog=True)
-plot.options(xshift=64)
-formatter = LogFormatter(labelOnlyBase = False)
-plot.add_callback(lambda ax: ax.yaxis.set_minor_formatter(formatter))
-plot.add_callback(lambda ax: ax.grid(which='minor'))
 
-plot.legend.options(loc='lower right')
+plot.set(xlabel='Horizontal', ylabel='Vertical')
+plot.set(xlim=[0, 512+1], ylim=[3e-4, 8e-4])
+plot.set(xticks=range(0, 512+1, 64))
+plot.set(ylog=True)
+plot.set(xshift=64)
+# formatter = LogFormatter(labelOnlyBase = False)
+# plot.add_callback(lambda ax: ax.yaxis.set_minor_formatter(formatter))
+# plot.add_callback(lambda ax: ax.grid(which='minor'))
 
-# Options for all series
-Series.options(linestyle = 'none')
+plot.legend.set(location='lower right')
+warnings.filterwarnings('error')
 
-# Options for all series of plot
-plot.series.options(markersize=8, fillstyle='top')
+# Add series
+one   = plot.series.add(x, y, color = excel.red         , label = "One"  , tag = "a,left")
+two   = plot.series.add(x, y, color = excel.orange      , label = "Two"  , tag = "b")
+three = plot.series.add(x, y, color = excel.green       , label = "Three", tag = ["c", "left"])
+four  = plot.series.add(x, y, markerFillStyle = "bottom", label = "Four" , tag = "d")
 
-# Options for series by tag
-plot.series.options.by_tag("a")(marker = '<')
-plot.series.options.by_tag("b")(marker = '^')
-plot.series.options.by_tag("c")(marker = '>')
-plot.series.options.by_tag("d")(marker = 'v')
+# Line style
+Series          .set(lineStyle = 'none')  # Default
+plot.series["d"].set(lineStyle = "solid") # Override
 
-# Options for series by tag - overrides defaults 
-plot.series.options.by_tag("left" )(fillstyle='left' )
-plot.series.options.by_tag("d")(linestyle = "solid")
+# Marker size
+plot.series.set(markerSize=8)
 
-# Add series - override fillstyle for one
-plot.series.add(x, y, color=excel.red   , label = "One"  , tag= "a,left")
-plot.series.add(x, y, color=excel.orange, label = "Two"  , tag= "b")
-three = plot.series.add(x, y, color=excel.green , label = "Three", tag= ["c", "left"])
-four = plot.series.add(x, y, label = "Four" , tag= "d", fillstyle='bottom')
+# Marker fill style
+plot.series        .set(markerFillStyle = 'top')
+plot.series["left"].set(markerFillStyle = 'left' )
+three              .set(markerFillStyle = 'right')
+# four: set on creation
 
-# Options for specific series
-three.options(fillstyle='right') # Override defaults
-four.options(color=excel.blue) 
-four.options.by_tag("d")(color=excel.purple) # Useless! It's already for a specific one.
+# Markers
+plot.series["a"].set(marker = '<')
+plot.series["b"].set(marker = '^')
+plot.series["c"].set(marker = '>')
+plot.series["d"].set(marker = 'v')
 
+# Color
+# one, two, three: set on creation
+four.set(color = excel.purple)
+four.set(color = excel.blue)
 
-plot.text.options(horizontalalignment='center', verticalalignment='center')
+# Text
+plot.text.set(anchor = 'center')
 plot.text.add((256, 6e-4), 'Text' )
 
-plot.show()
+#plot.show()
