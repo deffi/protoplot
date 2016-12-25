@@ -4,6 +4,7 @@ import warnings
  
 from protoplot import Plot, Series #, excel, LogFormatter
 from protoplot.util import excel
+from protoplot.renderer import MplRenderer as Renderer
 
 x = range(0, 512+1, 16)
 y = [4e-4 + 2e-4 * (xx/512) for xx in x]
@@ -57,3 +58,4 @@ plot.text.set(anchor = 'center')
 plot.text.add((256, 6e-4), 'Text' )
 
 #plot.show()
+Renderer().show(plot)
