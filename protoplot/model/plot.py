@@ -14,6 +14,9 @@ class Plot(Item):
 
         
     def register_options(self):
+        self.options.register("size", False, None)
+        self.options.register("dpi", 300)
+        
         self.options.register("backgroundColor", True, "white")
 
         self.options.register("xlabel", False, "")
@@ -26,7 +29,13 @@ class Plot(Item):
         self.options.register("yshift", False, None)
         self.options.register("xticks", False, None)
         self.options.register("xticks", False, None)
- 
+        self.options.register("grid", False, True)
+        self.options.register("xgrid", False, None)
+        self.options.register("ygrid", False, None)
+
+        # TODO additional options: font_size, size, dpi, grid, bar_labels,
+        # bar_stacked
+
         # Options for plot:
         #   * Rendering: dpi (should be in the page? what if there is none?),
         #     size
