@@ -82,6 +82,7 @@ class Test(unittest.TestCase):
     def testOptions(self):
         series1 = self.Series()
         series2 = self.Series()
+        series3 = self.Series(color="blue", lineWidth = 3)
           
         # Different instances have different sets of options
         series1.options.set(color="red"  , lineWidth = 1)
@@ -90,9 +91,11 @@ class Test(unittest.TestCase):
           
         self.assertEqual(series1.options.values["color"], "red"  )
         self.assertEqual(series2.options.values["color"], "green")
+        self.assertEqual(series3.options.values["color"], "blue" )
   
         self.assertEqual(series1.options.values["lineWidth"], 1)
         self.assertEqual(series2.options.values["lineWidth"], 2)
+        self.assertEqual(series3.options.values["lineWidth"], 3)
     
     def testInstanceSet(self):
         series1 = self.Series()
