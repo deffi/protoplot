@@ -15,7 +15,7 @@ formatter = LogFormatter(labelOnlyBase = False)
 plot.add_callback(lambda ax: ax.yaxis.set_minor_formatter(formatter))
 plot.add_callback(lambda ax: ax.grid(which='minor'))
 
-plot.legend.options(loc='center right')
+plot.legend.options(loc='lower right')
 
 # Options for all series
 Series.options(linestyle = 'none')
