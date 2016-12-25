@@ -1,12 +1,12 @@
 from protoplot.engine import Item
 
 class Series(Item):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, x=None, y=None, data=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Data: lower, upper, color, markercolor, markerfacecolor,
+        # Data: x, y, lower, upper, color, markercolor, markerfacecolor,
         #   markeredgecolor, fillstyle, label, 
-        
+
         self.options.register("color"    , True , None)
         
         self.options.register("lineVisible", False, True)
@@ -17,11 +17,16 @@ class Series(Item):
         self.options.register("markerColor", False, None)
         self.options.register("markerFillColor", False, None)
         self.options.register("markerLineColor", False, None)
+        self.options.register("markerFillStyle", False, None)
         self.options.register("markerFilled", False, True)
-        self.options.register("markerShape", False, None)
+        self.options.register("marker", False, None)
         self.options.register("markerSize", False, 4)
 
+        self.options.register("label", False, True)
         self.options.register("showInLegend", False, True)
         self.options.register("legendKey", False, None)
         self.options.register("legendNumPoints", False, 1)
 
+        self.x = x
+        self.y = y
+        self.data = data
