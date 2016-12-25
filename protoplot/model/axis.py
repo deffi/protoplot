@@ -10,8 +10,8 @@ class Axis(Item):
         self.options.register("max", False, None)
         self.options.register("format", False, None)
         
-        self.option.register("majorInterval", False, None)
-        self.option.register("minorInterval", False, None)
+        self.options.register("majorInterval", False, None)
+        self.options.register("minorInterval", False, None)
         self.options.register("majorTicks", False, True)
         self.options.register("minorTicks", False, False)
         self.options.register("majorGridVisible", False, True)
