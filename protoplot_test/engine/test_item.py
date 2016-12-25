@@ -11,18 +11,24 @@ class Test(unittest.TestCase):
         class Legend(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+                
+            def register_options(self):
                 self.options.register("color", True)
         
         class Plot(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
-                self.options.register("color", False)
- 
+
                 self.legend = Legend()
+
+            def register_options(self):
+                self.options.register("color", False)
  
         class Series(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+                
+            def register_options(self):
                 self.options.register("color"    , True)
                 self.options.register("lineWidth", False)
                 self.options.register("lineStyle", False)

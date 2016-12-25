@@ -65,6 +65,8 @@ class TestOptionsResolving(unittest.TestCase):
         class Series(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+                
+            def register_options(self):
                 self.options.register("a", True , "defaultA") # Inherit
                 self.options.register("b", False, "defaultB") # Same name, don't inherit
                 self.options.register("d", False, "defaultD") # Different name
@@ -72,6 +74,8 @@ class TestOptionsResolving(unittest.TestCase):
         class Legend(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+                
+            def register_options(self):
                 self.options.register("a", True , "defaultA") # Inherit
                 self.options.register("b", False, "defaultB") # Same name, don't inherit
                 self.options.register("e", False, "defaultE") # Different name
@@ -79,21 +83,25 @@ class TestOptionsResolving(unittest.TestCase):
         class Plot(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+
+                self.series = ItemContainer(Series)
+                self.legend = Legend()
+ 
+            def register_options(self):
                 self.options.register("a", False, "defaultA")
                 self.options.register("b", False, "defaultB")
                 self.options.register("c", False, "defaultC")
- 
-                self.series = ItemContainer(Series)
-                self.legend = Legend()
  
         class Page(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
+
+                self.plots = ItemContainer(Plot)
+                
+            def register_options(self):
                 self.options.register("a", False, "defaultA")
                 self.options.register("b", False, "defaultB")
                 self.options.register("c", False, "defaultC")
-
-                self.plots = ItemContainer(Plot)
 
         # Create instances
         page=Page()                

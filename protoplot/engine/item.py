@@ -34,8 +34,12 @@ class Item(metaclass=ItemMetaclass):
       * A "set" method as a shortcut for [:].set 
 
     Item subclasses should call the Item constructor with all *args and **kwargs
-    and configure their options in the constructor like so:
-        self.options.register("color", False)
+    and define a register_options method to register the options, like so:
+        self.options.register("color", False, "black")
+    Note that the Item constructor, which runs before the Item subclass
+    constructor, sets the initial options. The options must already be
+    registered at this point, so this cannot be done by the Item subclass
+    constructor. 
     '''
     
     def __init__(self, **kwargs):
@@ -50,11 +54,12 @@ class Item(metaclass=ItemMetaclass):
             del kwargs['tag']
         else:
             self.tags = []
-        
+
         # Create the instance-level options and initialize them from the
         # remaining kwargs.
         #self.options = OptionsContainer(self.__class__.options)
         self.options = OptionsContainer()
+        self.register_options()
         self.options.set(**kwargs)
 
         # Add the instance-level set method. See __set for an explanation. 
@@ -79,6 +84,10 @@ class Item(metaclass=ItemMetaclass):
     #############
     ## Options ##
     #############
+
+    def register_options(self):
+        raise NotImplementedError(
+            "Item subclasses must implement the register_options method")
 
     def __set(self, **kwargs):
         '''

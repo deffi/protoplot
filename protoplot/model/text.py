@@ -5,9 +5,10 @@ class Text(Item):
         super().__init__(*args, **kwargs)
 
         # Data: position, text
+        self.position = position
+        self.text = text
 
+    def register_options(self):
         self.options.register("color"    , True , None)
         self.options.register("anchor"   , False, "center")
 
-        self.position = position
-        self.text = text

@@ -4,6 +4,7 @@ class Point(Item):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def register_options(self):
         self.options.register("color"    , True , None)
         
         self.options.register("lineVisible", False, True)

@@ -7,6 +7,11 @@ class Series(Item):
         # Data: x, y, lower, upper, color, markercolor, markerfacecolor,
         #   markeredgecolor, fillstyle, label, 
 
+        self.x = x
+        self.y = y
+        self.data = data
+
+    def register_options(self):
         self.options.register("color"    , True , None)
         
         self.options.register("lineVisible", False, True)
@@ -27,6 +32,3 @@ class Series(Item):
         self.options.register("legendKey", False, None)
         self.options.register("legendNumPoints", False, 1)
 
-        self.x = x
-        self.y = y
-        self.data = data

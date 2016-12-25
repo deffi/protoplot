@@ -7,7 +7,13 @@ from protoplot.model.text import Text
 class Plot(Item):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.series = ItemContainer(Series)
+        self.text   = ItemContainer(Text)
+        self.legend = Legend()
+
         
+    def register_options(self):
         self.options.register("backgroundColor", True, "white")
 
         self.options.register("xlabel", False, "")
@@ -21,10 +27,6 @@ class Plot(Item):
         self.options.register("xticks", False, None)
         self.options.register("xticks", False, None)
  
-        self.series = ItemContainer(Series)
-        self.text   = ItemContainer(Text)
-        self.legend = Legend()
-
         # Options for plot:
         #   * Rendering: dpi (should be in the page? what if there is none?),
         #     size
@@ -35,3 +37,4 @@ class Plot(Item):
         # Option types:
         #   * x/yShift: array, list, unit, function
         #   * format: format string or formatter function
+        

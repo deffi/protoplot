@@ -4,6 +4,7 @@ class Axis(Item):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
+    def register_options(self):
         self.options.register("log", False, False)
         self.options.register("logBase", False, 10)
         self.options.register("min", False, None)
