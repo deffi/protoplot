@@ -36,7 +36,7 @@ class OptionsContainerTest(unittest.TestCase):
         self.assertEqual(oc2.values, {"color": "green"})
 
         # Verify the defaults
-        self.assertEqual(oc.default_values(), {
+        self.assertEqual(oc.fallback_values(), {
             "color"    : "black",
             "lineWidth": 1,
             "lineStyle": "solid",
