@@ -1,5 +1,7 @@
 import warnings
 
+# Resolving order: templates first, then fallbacks
+
 class _Entry:
     def __init__(self, name, inherit, default_value):
         # TODO do we need the name here? It's also stored in the
@@ -84,5 +86,6 @@ class OptionsContainer():
     def fallback_values(self):
         return { key: self.fallback_value(entry) for key, entry in self.entries.items() }
 
+    # TODO remove? Or should it return the number of set values?
     def __len__(self):
         return len(self.entries)

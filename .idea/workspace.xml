@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ebc5835-346d-4a86-a765-232a3418de27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/item.py" afterPath="$PROJECT_DIR$/protoplot/engine/item.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/options_container.py" afterPath="$PROJECT_DIR$/protoplot/engine/options_container.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" afterPath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
     </list>
@@ -20,21 +18,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+            <state relative-caret-position="593">
+              <caret line="88" column="64" lean-forward="false" selection-start-line="88" selection-start-column="64" selection-end-line="88" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+            <state relative-caret-position="488">
+              <caret line="98" column="33" lean-forward="true" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -42,12 +40,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="item.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protoplot/engine/item.py">
+      <file leaf-file-name="test_item.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_item.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="121" column="57" lean-forward="true" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
-              <folding />
+            <state relative-caret-position="105">
+              <caret line="10" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,8 +71,8 @@
       <list>
         <option value="$PROJECT_DIR$/protoplot/util/shift.py" />
         <option value="$PROJECT_DIR$/protoplot/engine/item.py" />
-        <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
         <option value="$PROJECT_DIR$/protoplot/engine/options_container.py" />
+        <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
       </list>
     </option>
   </component>
@@ -195,7 +195,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="em&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;series&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="test_item&#9;null&#9;null&#10;em&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;series&#9;null&#9;null" />
   </component>
   <component name="RunManager" selected="Python tests.Unit tests">
     <configuration default="false" name="Unit tests" type="tests" factoryName="py.test" temporary="true">
@@ -237,6 +237,30 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/protoplot_sample/protoplot_sample.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="py.test in OptionsContainerTest" type="tests" factoryName="py.test" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="protoplot" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
+      <option name="keywords" value="OptionsContainerTest" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -373,14 +397,16 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Unit tests" />
       <item index="1" class="java.lang.String" itemvalue="Python.protoplot_sample" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Python tests.Unit tests" />
-        <item index="1" class="java.lang.String" itemvalue="Python.protoplot_sample" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest" />
+        <item index="2" class="java.lang.String" itemvalue="Python.protoplot_sample" />
       </list>
     </recent_temporary>
   </component>
@@ -401,21 +427,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unit_tests - 2017.02.17 at 22h 33m 47s.xml">
-      <configuration name="Unit tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unit_tests - 2017.02.17 at 22h 33m 57s.xml">
-      <configuration name="Unit tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unit_tests - 2017.02.17 at 22h 37m 20s.xml">
-      <configuration name="Unit tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unit_tests - 2017.02.17 at 23h 30m 29s.xml">
-      <configuration name="Unit tests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unit_tests - 2017.02.17 at 23h 30m 36s.xml">
-      <configuration name="Unit tests" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unit_tests - 2017.02.17 at 23h 30m 53s.xml">
       <configuration name="Unit tests" configurationId="tests" />
     </history-entry>
@@ -430,6 +441,21 @@
     </history-entry>
     <history-entry file="Unit_tests - 2017.02.17 at 23h 45m 21s.xml">
       <configuration name="Unit tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unit_tests - 2017.02.18 at 23h 28m 00s.xml">
+      <configuration name="Unit tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unit_tests - 2017.02.18 at 23h 28m 08s.xml">
+      <configuration name="Unit tests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.02.18 at 23h 02m 26s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.02.18 at 23h 02m 35s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.02.18 at 23h 26m 18s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -510,15 +536,15 @@
     <entry file="file://$PROJECT_DIR$/protoplot/engine/item.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
-          <caret line="121" column="57" lean-forward="true" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
+          <caret line="121" column="57" lean-forward="false" selection-start-line="121" selection-start-column="26" selection-end-line="121" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_item.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="38" column="45" lean-forward="false" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+        <state relative-caret-position="105">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -527,9 +553,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="36" lean-forward="true" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
+        <state relative-caret-position="593">
+          <caret line="88" column="64" lean-forward="false" selection-start-line="88" selection-start-column="64" selection-end-line="88" selection-end-column="64" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="98" column="33" lean-forward="true" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
