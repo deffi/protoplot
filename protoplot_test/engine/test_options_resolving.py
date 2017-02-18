@@ -67,18 +67,18 @@ class TestOptionsResolving(unittest.TestCase):
                 super().__init__(*args, **kwargs)
                 
             def register_options(self):
-                self.options.register("a", True , "defaultA") # Inherit
-                self.options.register("b", False, "defaultB") # Same name, don't inherit
-                self.options.register("d", False, "defaultD") # Different name
+                self.options.register("a", "defaultA", inherit = True) # Inherit
+                self.options.register("b", "defaultB") # Same name, don't inherit
+                self.options.register("d", "defaultD") # Different name
 
         class Legend(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 
             def register_options(self):
-                self.options.register("a", True , "defaultA") # Inherit
-                self.options.register("b", False, "defaultB") # Same name, don't inherit
-                self.options.register("e", False, "defaultE") # Different name
+                self.options.register("a", "defaultA", inherit = True) # Inherit
+                self.options.register("b", "defaultB") # Same name, don't inherit
+                self.options.register("e", "defaultE") # Different name
         
         class Plot(Item):
             def __init__(self, *args, **kwargs):
@@ -88,9 +88,9 @@ class TestOptionsResolving(unittest.TestCase):
                 self.legend = Legend()
  
             def register_options(self):
-                self.options.register("a", False, "defaultA")
-                self.options.register("b", False, "defaultB")
-                self.options.register("c", False, "defaultC")
+                self.options.register("a", "defaultA")
+                self.options.register("b", "defaultB")
+                self.options.register("c", "defaultC")
  
         class Page(Item):
             def __init__(self, *args, **kwargs):
@@ -99,9 +99,9 @@ class TestOptionsResolving(unittest.TestCase):
                 self.plots = ItemContainer(Plot)
                 
             def register_options(self):
-                self.options.register("a", False, "defaultA")
-                self.options.register("b", False, "defaultB")
-                self.options.register("c", False, "defaultC")
+                self.options.register("a", "defaultA")
+                self.options.register("b", "defaultB")
+                self.options.register("c", "defaultC")
 
         # Create instances
         page=Page()                

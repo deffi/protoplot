@@ -3,12 +3,13 @@ import warnings
 # Resolving order: templates first, then fallbacks
 
 class _Entry:
-    def __init__(self, name, inherit, default_value):
+    def __init__(self, name, default = None, inherit = None, defer = None):
         # TODO do we need the name here? It's also stored in the
         # OptionsContainer.values dict.
-        self.name          = name
-        self.inherit       = inherit
-        self.default_value = default_value
+        self.name    = name
+        self.default = default
+        self.inherit = inherit
+        self.defer   = defer
 
 class OptionsContainer():
     '''
@@ -35,7 +36,7 @@ class OptionsContainer():
         options container associated with a parent item of of the item that is
         associated with this container, but can be None if the associated item
         is not part of a hierarchy, or is the root of the hierarchy. For
-        example, the key "lineWidth" might inherit the same key from the parent.
+        example, the key "fontSize" might inherit the same key from the parent.
         The "color" key for an options container associated with a border might
         inherit the parent's "borderColor" key.
       * Defer
@@ -66,8 +67,8 @@ class OptionsContainer():
             self.entries = other.entries
         self.values = {}
 
-    def register(self, name, inherit, default_value = None):
-        self.entries[name] = _Entry(name, inherit, default_value)
+    def register(self, name, default = None, inherit = None, defer = None):
+        self.entries[name] = _Entry(name, default, inherit, defer)
 
     def set(self, **args):
         for key, value in args.items():
@@ -80,7 +81,7 @@ class OptionsContainer():
         # We assume that only one of the fallback options is used; we can
         # therefore check them all in turn. Check the default value last,
         # because None is valid here.
-        return entry.default_value
+        return entry.default
 
 
     def fallback_values(self):

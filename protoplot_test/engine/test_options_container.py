@@ -12,9 +12,9 @@ class OptionsContainerTest(unittest.TestCase):
         oc = OptionsContainer()
 
         # Register some options
-        oc.register("color"    , True , "black")
-        oc.register("lineWidth", False, 1)
-        oc.register("lineStyle", False, "solid")
+        oc.register("color"    , "black", inherit = True)
+        oc.register("lineWidth", 1)
+        oc.register("lineStyle", "solid")
 
         self.oc = oc
 
