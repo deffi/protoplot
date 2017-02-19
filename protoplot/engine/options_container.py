@@ -2,12 +2,16 @@ import warnings
 
 # Resolving order: templates first, then fallbacks
 
+# TODO cache the resolving results
+
 class _Entry:
     def __init__(self, name, default = None, inherit = None, defer = None):
         # TODO do we need the name here? It's also stored in the
         # OptionsContainer.values dict.
         self.name    = name
+
         self.default = default
+
         self.inherit = inherit
         self.defer   = defer
 
@@ -24,6 +28,7 @@ class OptionsContainer():
         the value has not been set for this key.
 
     Setting the value for an unknown key is possible, but will elicit a warning.
+    # TODO not?
 
     The fallback is exactly one of the following:
       * Default value
@@ -61,32 +66,61 @@ class OptionsContainer():
     templates should be evaluated by this class.
     '''
     def __init__(self, other = None):
+        # Use the entries of /other/ (if specified) or initialize to an empty
+        # dict.
         if other is None:
-            self.entries = {}
+            self._entries = {}
         else:
-            self.entries = other.entries
-        self.values = {}
+            self._entries = other._entries
+
+        self._values = {}
 
     def register(self, name, default = None, inherit = None, defer = None):
-        self.entries[name] = _Entry(name, default, inherit, defer)
+        self._entries[name] = _Entry(name, default, inherit, defer)
 
     def set(self, **args):
         for key, value in args.items():
-            if not key in self.entries:
-                warnings.warn("Setting unknown option {}".format(key))
-            
-            self.values[key] = value
+            if key in self._entries:
+                self._values[key] = value
+            else:
+                warnings.warn("Ignoring unknown option {}".format(key))
 
-    def fallback_value(self, entry):
-        # We assume that only one of the fallback options is used; we can
-        # therefore check them all in turn. Check the default value last,
-        # because None is valid here.
-        return entry.default
+    def _resolve_entry(self, name, templates, parent_values):
+        # 1: Value
+        if name in self._values:
+            return self._values[name]
+
+        # 2: Templates (only explicitly set values, no fallbacks or defaults)
+        for template in templates:
+            if name in template._values:
+                return template._values[name]
+
+        # 3: Fallbacks
+        entry = self._entries[name]
+        # TODO current
 
 
-    def fallback_values(self):
-        return { key: self.fallback_value(entry) for key, entry in self.entries.items() }
+        # 4: Defaults
+
+        pass
+
+    def values(self):
+        # A copy of the values
+        return dict(self._values)
+
+    def resolve(self, templates = None, parent_values = None):
+        '''
+        Returns a dict(name: value).
+
+        templates is a list of OptionsContainer in decreasing order of priority
+        parent_values is a dict(name: value)
+        '''
+
+        return {
+            name, _resolve_entry(name, templates, parent_values)
+            for name in self._entries.keys()
+        }
 
     # TODO remove? Or should it return the number of set values?
-    def __len__(self):
-        return len(self.entries)
+    #def __len__(self):
+    #    return len(self.entries)
