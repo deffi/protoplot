@@ -2,6 +2,10 @@ import unittest
 
 from protoplot.engine.options_container import OptionsContainer
 
+# TODO Tests:
+#   * Copy an options container and modify either => modifications may not
+#     affect the copy
+
 class OptionsContainerTest(unittest.TestCase):
     ##################
     ## Test fixture ##

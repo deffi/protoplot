@@ -1,15 +1,10 @@
 import warnings
 
-# Resolving order: templates first, then fallbacks
+notSpecified = object()
 
-# TODO cache the resolving results
 
 class _Entry:
-    def __init__(self, name, default = None, inherit = None, defer = None):
-        # TODO do we need the name here? It's also stored in the
-        # OptionsContainer.values dict.
-        self.name    = name
-
+    def __init__(self, default = notSpecified, inherit = None, defer = None):
         self.default = default
 
         self.inherit = inherit
@@ -31,26 +26,29 @@ class OptionsContainer():
     # TODO not?
 
     The fallback is exactly one of the following:
-      * Default value
+      * Default value:
         If no value has been set for the key, the default value will be
-        returned. For example, the key "color" might have a default value of
-        "black" or "#000000".
-      * Inherit
+        returned. Example:
+          * color with a default value of "black" or "#000000" or color.black
+      * Inherit:
         If no value has been set for the key, another container (the "parent
         container") will be tested. The parent container is supposed to be the
         options container associated with a parent item of of the item that is
         associated with this container, but can be None if the associated item
-        is not part of a hierarchy, or is the root of the hierarchy. For
-        example, the key "fontSize" might inherit the same key from the parent.
-        The "color" key for an options container associated with a border might
-        inherit the parent's "borderColor" key.
-      * Defer
+        is not part of a hierarchy, or is the root of the hierarchy. Examples:
+          * fontSize inheriting the parent's fontSize
+          * color of a border inheriting the parent's borderColor
+          * label of an X axis inheriting the parent's xLabel
+          * fillColor of a marker inheriting the parent series' markerFillColor
+      * Defer:
         If no value has been set for the key, the value for another key in the
         same container will be returned. If no value for the other key has been
         set, the other key's fallback will be checked, just as for direct
-        accesses to the other key. For example, the key "markerFaceColor" might
-        defer to "markerColor", which might defer to "color", which might have
-        a default or inherited value.
+        accesses to the other key. Example:
+          * markerFaceColor deferring to markerColor deferring to color.
+            Color might have a default or inherited value.
+          * Not implemented: CSS style "border: 1px solid black" (shorthand
+            property)
     The default fallback is a default value of None.
 
     To register a key, call the register method, specifying the name of the key
@@ -66,16 +64,20 @@ class OptionsContainer():
     templates should be evaluated by this class.
     '''
     def __init__(self, other = None):
-        # Use the entries of /other/ (if specified) or initialize to an empty
-        # dict.
+        # The registered options. If other is specified, copy its registered
+        # options. Otherwise, start with an ampty dict.
         if other is None:
             self._entries = {}
         else:
-            self._entries = other._entries
+            self._entries = dict(other._entries)
 
+        # The explicitly set values
         self._values = {}
 
-    def register(self, name, default = None, inherit = None, defer = None):
+        # The inherited values from the parent
+        self._inheritedValues = {}
+
+    def register(self, name, default = notSpecified, inherit = None, defer = None):
         self._entries[name] = _Entry(name, default, inherit, defer)
 
     def set(self, **args):
@@ -104,9 +106,29 @@ class OptionsContainer():
 
         pass
 
-    def values(self):
-        # A copy of the values
-        return dict(self._values)
+    def _optionNames(self):
+        '''
+        Builds a list of option names in resolving order: if a defers to b, then
+        b must come before a in the list.
+        '''
+
+        unsortedNames = self._entries.keys()
+        sortedNames = []
+
+        while unsortedNames:
+            # Pick a name: take the first unsorted name and follow the deferral
+            # chain to the end.
+            name = unsortedNames[0]
+            while self._entries[name].defer:
+                name = self._entries[name].defer
+
+            # Add the picked name to the sorted list and remove it from the
+            # unsorted list.
+            sortedNames  .append(name)
+            unsortedNames.remove(name)
+
+        return sortedNames
+
 
     def resolve(self, templates = None, parent_values = None):
         '''
@@ -116,11 +138,9 @@ class OptionsContainer():
         parent_values is a dict(name: value)
         '''
 
-        return {
-            name, _resolve_entry(name, templates, parent_values)
-            for name in self._entries.keys()
-        }
+        # Resolving order: templates first, then fallbacks
 
-    # TODO remove? Or should it return the number of set values?
-    #def __len__(self):
-    #    return len(self.entries)
+        return {
+            name: _resolve_entry(name, templates, parent_values)
+                for name in self._optionNames()
+        }
