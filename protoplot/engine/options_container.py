@@ -4,10 +4,8 @@ notSpecified = object()
 
 
 class _Entry:
-    def __init__(self, default = notSpecified, inherit = None, defer = None):
+    def __init__(self, default = notSpecified, defer = None):
         self.default = default
-
-        self.inherit = inherit
         self.defer   = defer
 
 class OptionsContainer():
@@ -77,8 +75,8 @@ class OptionsContainer():
         # The inherited values from the parent
         self._inheritedValues = {}
 
-    def register(self, name, default = notSpecified, inherit = None, defer = None):
-        self._entries[name] = _Entry(name, default, inherit, defer)
+    def register(self, name, default = notSpecified, defer = None):
+        self._entries[name] = _Entry(default, defer)
 
     def set(self, **args):
         for key, value in args.items():
@@ -87,24 +85,6 @@ class OptionsContainer():
             else:
                 warnings.warn("Ignoring unknown option {}".format(key))
 
-    def _resolve_entry(self, name, templates, parent_values):
-        # 1: Value
-        if name in self._values:
-            return self._values[name]
-
-        # 2: Templates (only explicitly set values, no fallbacks or defaults)
-        for template in templates:
-            if name in template._values:
-                return template._values[name]
-
-        # 3: Fallbacks
-        entry = self._entries[name]
-        # TODO current
-
-
-        # 4: Defaults
-
-        pass
 
     def _optionNames(self):
         '''
@@ -129,8 +109,38 @@ class OptionsContainer():
 
         return sortedNames
 
+    def _resolve_entry(self, name, templates, resolvedValues):
+        # Value
+        if name in self._values:
+            return self._values[name]
 
-    def resolve(self, templates = None, parent_values = None):
+        # Shorthand
+
+        # Template value (only explicitly set values, no fallbacks or defaults)
+        for template in templates:
+            if name in template._values:
+                return template._values[name]
+
+        # Template shorthand
+
+        # Inherited
+        if name in self._inheritedValues:
+            return self._inheritedValues[name]
+
+        # Deferred
+        deferredName = name
+        while deferredName and deferredName not in resolvedValues:
+            entry = self._entries[deferredName]
+            deferredName = entry.defer
+        if deferredName:
+            return resolvedValues[deferredName]
+
+        # Default
+        entry = self._entries[name]
+        return entry.default
+
+
+    def resolve(self, templates = None):
         '''
         Returns a dict(name: value).
 
@@ -139,8 +149,7 @@ class OptionsContainer():
         '''
 
         # Resolving order: templates first, then fallbacks
+        resolvedValues = dict()
 
-        return {
-            name: _resolve_entry(name, templates, parent_values)
-                for name in self._optionNames()
-        }
+        for name in self._optionNames():
+            resolvedValues[name] = self._resolve_entry(name, templates or [], resolvedValues)
