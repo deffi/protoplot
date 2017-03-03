@@ -99,7 +99,7 @@ class OptionsContainer():
             # Pick a name: take the first unsorted name and follow the deferral
             # chain to the end.
             name = unsortedNames[0]
-            while self._entries[name].defer:
+            while self._entries[name].defer and self._entries[name].defer in unsortedNames:
                 name = self._entries[name].defer
 
             # Add the picked name to the sorted list and remove it from the
@@ -140,7 +140,7 @@ class OptionsContainer():
         return entry.default
 
 
-    def resolve(self, templates = None):
+    def resolve(self, templates = None, pruneNotSpecified = False):
         '''
         Returns a dict(name: value).
 
@@ -152,6 +152,11 @@ class OptionsContainer():
         resolvedValues = dict()
 
         for name in self._optionNames():
-            resolvedValues[name] = self._resolve_entry(name, templates or [], resolvedValues)
+            resolved = self._resolve_entry(name, templates or [], resolvedValues)
+
+            # Add the resolved value to the result dict, unless it is
+            # notSpecified and notSpecified is to be pruend.
+            if not (resolved is notSpecified and pruneNotSpecified):
+                resolvedValues[name] = resolved
 
         return resolvedValues

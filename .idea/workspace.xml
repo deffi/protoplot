@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ebc5835-346d-4a86-a765-232a3418de27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/options_container.py" afterPath="$PROJECT_DIR$/protoplot/engine/options_container.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" afterPath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
     </list>
@@ -22,8 +21,8 @@
       <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="563">
+              <caret line="157" column="60" lean-forward="false" selection-start-line="157" selection-start-column="60" selection-end-line="157" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -32,8 +31,8 @@
       <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="74" column="31" lean-forward="true" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
+            <state relative-caret-position="563">
+              <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -444,34 +443,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 33m 43s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 01m 53s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 34m 28s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 04m 03s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 35m 58s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 05m 30s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 37m 11s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 05m 44s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 37m 27s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 09m 32s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 39m 45s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 09m 45s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 40m 08s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 10m 45s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 40m 15s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 17m 32s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 40m 23s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 17m 39s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 22h 40m 53s.xml">
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 19m 06s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
   </component>
@@ -484,7 +483,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297456" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297456" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297456" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -718,16 +717,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="563">
+          <caret line="157" column="60" lean-forward="false" selection-start-line="157" selection-start-column="60" selection-end-line="157" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="74" column="31" lean-forward="true" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
+        <state relative-caret-position="563">
+          <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

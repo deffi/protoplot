@@ -13,17 +13,6 @@ class OptionsContainerTest(unittest.TestCase):
 
     def setUp(self):
         pass
-        # # Define one OC
-        # oc = OptionsContainer()
-        #
-        # # Register some options
-        # oc.register("markerColor"    , defer   = "color")
-        # oc.register("markerFillColor", defer   = "markerColor")
-        # oc.register("color"          , default = "black")
-        # oc.register("lineWidth"      , default = 1)
-        # oc.register("lineStyle"      , default = "solid")
-        #
-        # self.oc = oc
 
 
     ###############
@@ -100,14 +89,103 @@ class OptionsContainerTest(unittest.TestCase):
         pass
 
     def testResolvingDeferred(self):
-        # TODO create OC with deferral (deferred first/deferring first), and
-        # test with multi-stage deferring/single-stage deferring (all options!)
-        # TODO also test ._optionNames
-        pass
+        # Define an OC and register options
+        oc = OptionsContainer()
+        oc.register("markerFillColor"      , defer = "markerColor")
+        oc.register("color"                                       )
+        oc.register("markerBackgroundColor", defer = "markerColor")
+        oc.register("markerColor"          , defer = "color")
+        oc.register("markerLineColor"      , defer = "markerColor")
+
+        optionNames = oc._optionNames();
+        self.assertLess(optionNames.index("markerColor"), optionNames.index("markerFillColor"      ))
+        self.assertLess(optionNames.index("markerColor"), optionNames.index("markerLineColor"      ))
+        self.assertLess(optionNames.index("markerColor"), optionNames.index("markerBackgroundColor"))
+        self.assertLess(optionNames.index("color")      , optionNames.index("markerColor"          ))
+
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": notSpecified,
+            "markerFillColor"      : notSpecified,
+            "markerLineColor"      : notSpecified,
+            "markerColor"          : notSpecified,
+            "color"                : notSpecified,
+        })
+
+        # Set markerBackgroundColor, it must not affect anything else
+        oc.set(markerBackgroundColor = "red")
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": "red",
+            "markerFillColor"      : notSpecified,
+            "markerLineColor"      : notSpecified,
+            "markerColor"          : notSpecified,
+            "color"                : notSpecified,
+        })
+
+        # Set color, it must affect direct (markerColor) and indirect
+        # (markerFillColor, markerLineColor) deferring.
+        oc.set(color = "yellow")
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": "red",
+            "markerFillColor"      : "yellow",
+            "markerLineColor"      : "yellow",
+            "markerColor"          : "yellow",
+            "color"                : "yellow",
+        })
+
+        # Set markerFillColor, it must now have that value
+        oc.set(markerFillColor = "green")
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": "red",
+            "markerFillColor"      : "green",
+            "markerLineColor"      : "yellow",
+            "markerColor"          : "yellow",
+            "color"                : "yellow",
+        })
+
+        # Set markerColor, it must affect markerLineColor (the only one without
+        # explicit value so far)
+        oc.set(markerColor = "blue")
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": "red",
+            "markerFillColor"      : "green",
+            "markerLineColor"      : "blue",
+            "markerColor"          : "blue",
+            "color"                : "yellow",
+        })
+
+        # Set markerLineColor (now everything has an explicit value)
+        oc.set(markerLineColor = "indigo")
+        self.assertEqual(oc.resolve(), {
+            "markerBackgroundColor": "red",
+            "markerFillColor"      : "green",
+            "markerLineColor"      : "indigo",
+            "markerColor"          : "blue",
+            "color"                : "yellow",
+        })
 
     def testResolvingDefault(self):
-        # TODO create OC with and without default values, with and without value
-        # set
+        # Define an OC and register options
+        oc = OptionsContainer()
+        oc.register("color"  , default = "black")
+        oc.register("width"  , default = 1)
+        oc.register("pattern", default = "solid")
+
+        self.assertEqual(oc.resolve(), {
+            "color"  : "black",
+            "width"  : 1,
+            "pattern": "solid",
+        })
+
+        # Set some (but not all) values
+        oc.set(width = 3)
+        oc.set(pattern = "dashed")
+
+        self.assertEqual(oc.resolve(), {
+            "color"  : "black",  # Still at its default value
+            "width"  : 3,
+            "pattern": "dashed",
+        })
+
         pass
 
 
@@ -115,28 +193,31 @@ class OptionsContainerTest(unittest.TestCase):
     ## Priority ##
     ##############
 
-    ############
-    ## Values ##
-    ############
 
-    def testValues(self):
-        pass
+    ###########
+    ## Other ##
+    ###########
 
-        # oc = self.oc
-        #
-        # # Set a single value
-        # oc.set(color="red")
-        # self.assertEqual(oc.values, {
-        #     "color": "red",
-        # })
-        #
-        # # Set two values at once
-        # oc.set(lineWidth=1, lineStyle="solid")
-        # self.assertEqual(oc.values, {
-        #     "color": "red",
-        #     "lineWidth": 1,
-        #     "lineStyle": "solid",
-        # })
+    def testCopying(self):
+        oc1 = OptionsContainer()
+        oc1.register("color")
+        oc1.register("width")
+        oc1.register("pattern")
+
+        oc2 = OptionsContainer(oc1)
+
+        # Set different values and make sure they don't overwrite each other
+        oc1.set(color="red")
+        self.assertEqual(oc1.resolve(pruneNotSpecified = True), {"color": "red"})
+        self.assertEqual(oc2.resolve(pruneNotSpecified = True), {})
+
+        oc2.set(color="green")
+        self.assertEqual(oc1.resolve(pruneNotSpecified = True), {"color": "red"})
+        self.assertEqual(oc2.resolve(pruneNotSpecified = True), {"color": "green"})
+
+        oc1.set(color="blue")
+        self.assertEqual(oc1.resolve(pruneNotSpecified = True), {"color": "blue"})
+        self.assertEqual(oc2.resolve(pruneNotSpecified = True), {"color": "green"})
 
     def testUnknownOptions(self):
         pass
@@ -151,48 +232,6 @@ class OptionsContainerTest(unittest.TestCase):
         # self.assertEqual(oc.values, {
         #     "markerSize": 4
         # })
-
-    def testCopyValues(self):
-        pass
-
-        # oc1 = self.oc
-        # oc2 = OptionsContainer(oc1)
-        #
-        # # Set different values and make sure they don't overwrite each other
-        # oc1.set(color="red")
-        # self.assertEqual(oc1.values, {"color": "red"})
-        # self.assertEqual(oc2.values, {})
-        #
-        # oc2.set(color="green")
-        # self.assertEqual(oc1.values, {"color": "red"  })
-        # self.assertEqual(oc2.values, {"color": "green"})
-        #
-        # oc1.set(color="blue")
-        # self.assertEqual(oc1.values, {"color": "blue" })
-        # self.assertEqual(oc2.values, {"color": "green"})
-
-
-    ###############
-    ## Fallbacks ##
-    ###############
-
-    def testFallbacks(self):
-        pass
-        # # Verify the fallback values
-        # self.assertEqual(self.oc.fallback_values(), {
-        #     "color"    : "black",
-        #     "lineWidth": 1,
-        #     "lineStyle": "solid",
-        # })
-
-    ###########
-    ## Other ##
-    ###########
-
-    def testCopying(self):
-        # TODO make a copy and ensure that setting one copy does not change the
-        # other
-        pass
 
 
 
