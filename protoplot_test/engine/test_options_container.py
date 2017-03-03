@@ -1,6 +1,6 @@
 import unittest
 
-from protoplot.engine.options_container import OptionsContainer
+from protoplot.engine.options_container import OptionsContainer, notSpecified
 
 # TODO Tests:
 #   * Copy an options container and modify either => modifications may not
@@ -12,45 +12,67 @@ class OptionsContainerTest(unittest.TestCase):
     ##################
 
     def setUp(self):
-        # Define one OC
-        oc = OptionsContainer()
-
-        # Register some options
-        oc.register("markerColor"    , defer   = "color")
-        oc.register("markerFillColor", defer   = "markerColor")
-        oc.register("color"          , default = "black")
-        oc.register("lineWidth"      , default = 1)
-        oc.register("lineStyle"      , default = "solid")
-
-        self.oc = oc
-
-
-    #########################
-    ## Registering options ##
-    #########################
-
-    def testCopying(self):
-        # TODO make a copy and ensure that setting one copy does not change the
-        # other
         pass
+        # # Define one OC
+        # oc = OptionsContainer()
+        #
+        # # Register some options
+        # oc.register("markerColor"    , defer   = "color")
+        # oc.register("markerFillColor", defer   = "markerColor")
+        # oc.register("color"          , default = "black")
+        # oc.register("lineWidth"      , default = 1)
+        # oc.register("lineStyle"      , default = "solid")
+        #
+        # self.oc = oc
 
 
     ###############
     ## Resolving ##
     ###############
 
-    def testResolvingValue(self):
-        # TODO don't use self.oc, build one for this specific test
-        self.oc.set(color = "red", markerColor = "green", markerFillColor = "blue")
-        self.oc.set(lineWidth = 2, lineStyle = "dashed")
-        self.oc.set(color="red", lineWidth = 2)
+    def testResolvingNoOptions(self):
+        oc = OptionsContainer()
 
-        self.assertEqual(self.oc.resolve(), {
-            "color"          : "red",
-            "markerColor"    : "green",
-            "markerFillColor": "blue",
-            "lineWidth"      : 2,
-            "lineStyle"      : "solid",
+        self.assertEqual(oc.resolve(), dict())
+
+    def testResolvingNoValues(self):
+        oc = OptionsContainer()
+
+        oc.register("color")
+        oc.register("width")
+        oc.register("pattern")
+
+        self.assertEqual(oc.resolve(), {
+            "color"  : notSpecified,
+            "width"  : notSpecified,
+            "pattern": notSpecified,
+        })
+
+    def testResolvingValue(self):
+        # Define an OC and register options
+        oc = OptionsContainer()
+        oc.register("color")
+        oc.register("width")
+        oc.register("pattern")
+
+        # Set a single value
+        oc.set(color = "red")
+        # Set multiple values at once
+        oc.set(width = 2, pattern = "solid")
+
+        self.assertEqual(oc.resolve(), {
+            "color"  : "red",
+            "width"  : 2,
+            "pattern": "solid",
+        })
+
+        # Overwrite two values
+        oc.set(color="green", width = 3)
+
+        self.assertEqual(oc.resolve(), {
+            "color"  : "green",
+            "width"  : 3,
+            "pattern": "solid",
         })
 
     def testResolvingShorthand(self):
@@ -162,6 +184,17 @@ class OptionsContainerTest(unittest.TestCase):
         #     "lineWidth": 1,
         #     "lineStyle": "solid",
         # })
+
+    ###########
+    ## Other ##
+    ###########
+
+    def testCopying(self):
+        # TODO make a copy and ensure that setting one copy does not change the
+        # other
+        pass
+
+
 
 
 if __name__ == "__main__":

@@ -92,7 +92,7 @@ class OptionsContainer():
         b must come before a in the list.
         '''
 
-        unsortedNames = self._entries.keys()
+        unsortedNames = list(self._entries.keys())
         sortedNames = []
 
         while unsortedNames:
@@ -153,3 +153,5 @@ class OptionsContainer():
 
         for name in self._optionNames():
             resolvedValues[name] = self._resolve_entry(name, templates or [], resolvedValues)
+
+        return resolvedValues
