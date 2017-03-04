@@ -21,8 +21,8 @@
       <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="157" column="60" lean-forward="false" selection-start-line="157" selection-start-column="60" selection-end-line="157" selection-end-column="60" />
+            <state relative-caret-position="435">
+              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -31,8 +31,8 @@
       <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+            <state relative-caret-position="278">
+              <caret line="156" column="15" lean-forward="true" selection-start-line="156" selection-start-column="15" selection-end-line="156" selection-end-column="15" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -443,21 +443,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 01m 53s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 04m 03s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 05m 30s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 05m 44s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 09m 32s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 09m 45s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
@@ -471,6 +456,21 @@
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.03 at 23h 19m 06s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 55m 50s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 58m 00s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 58m 51s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 59m 27s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 59m 52s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
   </component>
@@ -717,16 +717,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="157" column="60" lean-forward="false" selection-start-line="157" selection-start-column="60" selection-end-line="157" selection-end-column="60" />
+        <state relative-caret-position="435">
+          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="241" column="0" lean-forward="true" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+        <state relative-caret-position="278">
+          <caret line="156" column="15" lean-forward="true" selection-start-line="156" selection-start-column="15" selection-end-line="156" selection-end-column="15" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

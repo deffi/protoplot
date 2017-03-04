@@ -1,6 +1,11 @@
 import warnings
 
-notSpecified = object()
+class _NotSpecified:
+    def __str__(self):
+        return "notSpecified"
+
+notSpecified = _NotSpecified
+
 
 
 class _Entry:

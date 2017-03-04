@@ -69,15 +69,84 @@ class OptionsContainerTest(unittest.TestCase):
         pass
 
     def testResolvingTemplate(self):
-        # TODO create two template and test:
-        #   * value set in this OC
-        #   * value set in one or the other templates
-        #   * value set in both templates
-        #   * value set in this OC and one or the other templates
-        #   * value set in this OC and both templates
-        # In all cases where appropriate, test both priority orders
+        # Create an options container with a number of options. The name of the
+        # option indicates in which of the options containers the value will be
+        # set.
+        oc = OptionsContainer()
+        oc.register("a")   # Set in template a
+        oc.register("b")   # Set in template b
+        oc.register("ab")  # Set in both templates
+        oc.register("x")   # Set in this options container
+        oc.register("xa")  # Set in this options container and template a
+        oc.register("xb")  # Set in this options container and template b
+        oc.register("xab") # Set in this options container and both templates
 
-        pass
+        # Create the templates - they are copies of the options container
+        template_a = OptionsContainer(oc)
+        template_b = OptionsContainer(oc)
+        templates = [template_a, template_b]
+
+        # In all options containers, set the respective options.
+        oc        .set(x = "x", xa = "x", xb = "x", xab = "x")
+        template_a.set(a = "a", ab = "a", xa = "a", xab = "a")
+        template_b.set(b = "b", ab = "b", xb = "b", xab = "b")
+
+        # Without templates
+        self.assertEqual(oc.resolve(), {
+            "a"  : notSpecified,
+            "b"  : notSpecified,
+            "ab" : notSpecified,
+            "x"  : "x",
+            "xa" : "x",
+            "xb" : "x",
+            "xab": "x",
+        })
+
+        # With only template a
+        self.assertEqual(oc.resolve(templates = [template_a]), {
+            "a"  : "a",
+            "b"  : notSpecified,
+            "ab" : "a",
+            "x"  : "x",
+            "xa" : "x",
+            "xb" : "x",
+            "xab": "x",
+        })
+
+        # With only template b
+        self.assertEqual(oc.resolve(templates = [template_b]), {
+            "a"  : notSpecified,
+            "b"  : "b",
+            "ab" : "b",
+            "x"  : "x",
+            "xa" : "x",
+            "xb" : "x",
+            "xab": "x",
+        })
+
+        # With both templates
+        self.assertEqual(oc.resolve(templates = [template_a, template_b]), {
+            "a"  : "a",
+            "b"  : "b",
+            "ab" : "a",
+            "x"  : "x",
+            "xa" : "x",
+            "xb" : "x",
+            "xab": "x",
+        })
+
+        # With both templates (inverse order)
+        self.assertEqual(oc.resolve(templates = [template_b, template_a]), {
+            "a"  : "a",
+            "b"  : "b",
+            "ab" : "b",
+            "x"  : "x",
+            "xa" : "x",
+            "xb" : "x",
+            "xab": "x",
+        })
+
+
 
     def testResolvingTemplateShorthand(self):
         # Shorthand is not implemented
