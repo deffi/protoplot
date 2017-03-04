@@ -153,9 +153,53 @@ class OptionsContainerTest(unittest.TestCase):
         pass
 
     def testResolvingInherited(self):
-        # TODO set some inherited values and test with/without overriding by
-        # value
-        pass
+        # Define an OC and register options
+        # Options: v - value set, i - inherit, p - parent value set
+        # Inherit is True for values including "i".
+        oc = OptionsContainer()
+        oc.register("vip", inherit = True)
+        oc.register("vi" , inherit = True)
+        oc.register("vp" )
+        oc.register("v"  )
+        oc.register("ip" , inherit = True)
+        oc.register("i"  , inherit = True)
+        oc.register("p"  )
+
+        # Set the values of this options container (values including "v")
+        oc.set(vip = "this")
+        oc.set(vi  = "this")
+        oc.set(vp  = "this")
+        oc.set(v   = "this")
+
+        # Set the parent values (values including "p")
+        parent_values = {
+            "vip": "parent",
+            "vp" : "parent",
+            "ip" : "parent",
+            "p"  : "parent",
+        }
+
+        # Resolve without inherited values
+        self.assertEqual(oc.resolve(), {
+            "vip": "this",
+            "vi" : "this",
+            "vp" : "this",
+            "v"  : "this",
+            "ip" : notSpecified,
+            "i"  : notSpecified,
+            "p"  : notSpecified,
+        })
+
+        # Resolve with inherited values
+        self.assertEqual(oc.resolve(inherited=parent_values), {
+            "vip": "this",
+            "vi" : "this",
+            "vp" : "this",
+            "v"  : "this",
+            "ip" : "parent",
+            "i"  : notSpecified,  # Parent has the value, but value is not inherited
+            "p"  : notSpecified,  # Value is inherited, but parent does not have the value
+        })
 
     def testResolvingDeferred(self):
         # Define an OC and register options
@@ -254,8 +298,6 @@ class OptionsContainerTest(unittest.TestCase):
             "width"  : 3,
             "pattern": "dashed",
         })
-
-        pass
 
 
     ##############

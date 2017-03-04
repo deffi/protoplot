@@ -9,8 +9,9 @@ notSpecified = _NotSpecified
 
 
 class _Entry:
-    def __init__(self, default = notSpecified, defer = None):
+    def __init__(self, default = notSpecified, inherit = False, defer = None):
         self.default = default
+        self.inherit = inherit
         self.defer   = defer
 
 class OptionsContainer():
@@ -77,11 +78,8 @@ class OptionsContainer():
         # The explicitly set values
         self._values = {}
 
-        # The inherited values from the parent
-        self._inheritedValues = {}
-
-    def register(self, name, default = notSpecified, defer = None):
-        self._entries[name] = _Entry(default, defer)
+    def register(self, name, default = notSpecified, inherit = False, defer = None):
+        self._entries[name] = _Entry(default, inherit, defer)
 
     def set(self, **args):
         for key, value in args.items():
@@ -114,7 +112,7 @@ class OptionsContainer():
 
         return sortedNames
 
-    def _resolve_entry(self, name, templates, resolvedValues):
+    def _resolve_entry(self, name, templates, inherited, resolvedValues):
         # Value
         if name in self._values:
             return self._values[name]
@@ -129,8 +127,8 @@ class OptionsContainer():
         # Template shorthand
 
         # Inherited
-        if name in self._inheritedValues:
-            return self._inheritedValues[name]
+        if self._entries[name].inherit and name in inherited:
+            return inherited[name]
 
         # Deferred
         deferredName = name
@@ -144,20 +142,21 @@ class OptionsContainer():
         entry = self._entries[name]
         return entry.default
 
-
-    def resolve(self, templates = None, pruneNotSpecified = False):
+    def resolve(self, templates = None, inherited = None, pruneNotSpecified = False):
         '''
         Returns a dict(name: value).
 
         templates is a list of OptionsContainer in decreasing order of priority
-        parent_values is a dict(name: value)
+        inherited is a dict(name: value)
         '''
 
-        # Resolving order: templates first, then fallbacks
         resolvedValues = dict()
 
+        if templates is None: templates = list()
+        if inherited is None: inherited = dict()
+
         for name in self._optionNames():
-            resolved = self._resolve_entry(name, templates or [], resolvedValues)
+            resolved = self._resolve_entry(name, templates, inherited, resolvedValues)
 
             # Add the resolved value to the result dict, unless it is
             # notSpecified and notSpecified is to be pruend.
