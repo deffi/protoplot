@@ -20,13 +20,17 @@ class OptionsContainerTest(unittest.TestCase):
     ###############
 
     def testResolvingNoOptions(self):
+        # An options container without any registered options must resolve to
+        # an empty dict.
+
         oc = OptionsContainer()
 
         self.assertEqual(oc.resolve(), dict())
 
     def testResolvingNoValues(self):
-        oc = OptionsContainer()
+        # If not values are set, all values must resolve to notSpecified.
 
+        oc = OptionsContainer()
         oc.register("color")
         oc.register("width")
         oc.register("pattern")
@@ -38,6 +42,9 @@ class OptionsContainerTest(unittest.TestCase):
         })
 
     def testResolvingValue(self):
+        # Test setting values (single value, or multiple values in one call) and
+        # overwriting previously-set values.
+
         # Define an OC and register options
         oc = OptionsContainer()
         oc.register("color")
@@ -145,8 +152,6 @@ class OptionsContainerTest(unittest.TestCase):
             "xb" : "x",
             "xab": "x",
         })
-
-
 
     def testResolvingTemplateShorthand(self):
         # Shorthand is not implemented

@@ -21,6 +21,8 @@ class OptionsContainer():
     An options container is supposed to be associated with an object ("item"),
     potentially in a hierarchy of objects.
 
+    # TODO this documentation is very outdated
+
     Compared to dict, OptionsContainer has the following features:
       * It maintains a list of known keys.
       * Each known key can have a fallback that is used in lieu of the value if

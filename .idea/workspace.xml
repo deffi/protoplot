@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ebc5835-346d-4a86-a765-232a3418de27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/options_container.py" afterPath="$PROJECT_DIR$/protoplot/engine/options_container.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" afterPath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
     </list>
@@ -19,21 +18,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="278">
+              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="332" column="0" lean-forward="false" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
+            <state relative-caret-position="623">
+              <caret line="357" column="0" lean-forward="true" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -64,8 +63,8 @@
         <option value="$PROJECT_DIR$/protoplot/util/shift.py" />
         <option value="$PROJECT_DIR$/protoplot/engine/item.py" />
         <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py" />
-        <option value="$PROJECT_DIR$/protoplot/engine/options_container.py" />
         <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
+        <option value="$PROJECT_DIR$/protoplot/engine/options_container.py" />
       </list>
     </option>
   </component>
@@ -759,21 +758,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="332" column="0" lean-forward="false" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
+        <state relative-caret-position="623">
+          <caret line="357" column="0" lean-forward="true" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
