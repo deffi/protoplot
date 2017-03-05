@@ -1,3 +1,5 @@
+import re
+
 def make_tags_list(arg):
     '''
     Creates a list of strings from the input.
@@ -7,15 +9,18 @@ def make_tags_list(arg):
       * A string of comma-separated values
     '''
     if isinstance(arg, list):
-        # TODO verify that the list contains valid tags (strings or recursive
-        # call?)
+        # TODO verify that the list contains valid tags
         # TODO allow all iterables, at least tuple
-        return arg
+        result = []
+        for item in arg:
+            result += make_tags_list(item)
+
+        return result
+
     elif isinstance(arg, str):
-        # TODO strip off whitespace
-        # TODO allow splitting on whitespace
-        # TODO remove empty
-        return arg.split(",")
+        parts = re.split(r',; ', arg)
+        return [part for part in parts if part != ""]
+
     else:
         raise ValueError("Unsupported tags specification: %s" % repr(arg))
 
