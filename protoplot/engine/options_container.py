@@ -80,6 +80,9 @@ class OptionsContainer():
         # The explicitly set values
         self._values = {}
 
+        # The indirectly set values
+        self._indirect_values = {}
+
     def register(self, name, default = notSpecified, inherit = False, defer = None):
         self._entries[name] = _Entry(default, inherit, defer)
 
@@ -90,6 +93,11 @@ class OptionsContainer():
             else:
                 warnings.warn("Ignoring unknown option {}".format(key))
 
+    def set_indirect(self, name, value):
+        if name in self._entries:
+            self._indirect_values[name] = value
+        else:
+            warnings.warn("Ignoring unknown option {}".format(key))
 
     def _optionNames(self):
         '''
@@ -120,6 +128,10 @@ class OptionsContainer():
             return self._values[name]
 
         # Shorthand
+
+        # Indirect
+        if name in self._indirect_values:
+            return self._indirect_values[name]
 
         # Template value (only explicitly set values, no fallbacks or defaults)
         for template in templates:

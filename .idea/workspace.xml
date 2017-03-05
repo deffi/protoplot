@@ -18,21 +18,23 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="173">
+              <caret line="133" column="45" lean-forward="false" selection-start-line="133" selection-start-column="45" selection-end-line="133" selection-end-column="45" />
+              <folding>
+                <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="357" column="0" lean-forward="true" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
+            <state relative-caret-position="225">
+              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -49,6 +51,7 @@
       <find>len</find>
       <find>inherit</find>
       <find>inherited</find>
+      <find>indirect</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/protoplot</dir>
@@ -471,18 +474,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 21h 59m 52s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 02m 31s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 18m 18s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 41m 41s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 52m 36s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
@@ -492,14 +483,26 @@
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 52m 47s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest_and_testResolvingDeferred - 2017.03.04 at 22h 18m 10s.xml">
-      <configuration name="py.test in OptionsContainerTest and testResolvingDeferred" configurationId="tests" />
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 16m 56s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest_and_testResolvingDeferred - 2017.03.04 at 22h 18m 13s.xml">
-      <configuration name="py.test in OptionsContainerTest and testResolvingDeferred" configurationId="tests" />
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 21m 57s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest_and_testResolvingInherited - 2017.03.04 at 22h 17m 13s.xml">
-      <configuration name="py.test in OptionsContainerTest and testResolvingInherited" configurationId="tests" />
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 22m 32s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 24m 23s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 24m 45s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 25m 00s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 25m 07s.xml">
+      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -511,7 +514,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297456" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297456" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297456" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -539,7 +542,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -557,7 +562,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1395">
           <caret line="93" column="0" lean-forward="true" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -575,7 +582,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -600,7 +609,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1050">
           <caret line="70" column="65" lean-forward="false" selection-start-line="70" selection-start-column="65" selection-end-line="70" selection-end-column="65" />
-          <folding />
+          <folding>
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -681,7 +692,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
           <caret line="70" column="65" lean-forward="false" selection-start-line="70" selection-start-column="65" selection-end-line="70" selection-end-column="65" />
-          <folding />
+          <folding>
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -758,21 +771,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
+    <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="357" column="0" lean-forward="true" selection-start-line="357" selection-start-column="0" selection-end-line="357" selection-end-column="0" />
+        <state relative-caret-position="173">
+          <caret line="133" column="45" lean-forward="false" selection-start-line="133" selection-start-column="45" selection-end-line="133" selection-end-column="45" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="225">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

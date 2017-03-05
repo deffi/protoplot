@@ -75,6 +75,23 @@ class OptionsContainerTest(unittest.TestCase):
         # Shorthand is not implemented
         pass
 
+    def testResolvingIndirect(self):
+        oc = OptionsContainer()
+        oc.register("direct_only")
+        oc.register("indirect_only")
+        oc.register("both")
+
+        oc.set         (direct_only    = "direct_value"  )
+        oc.set         (both           = "direct_value"  )
+        oc.set_indirect("indirect_only", "indirect_value")
+        oc.set_indirect("both"         , "indirect_value")
+
+        self.assertEqual(oc.resolve(), {
+            "direct_only"  : "direct_value"  ,
+            "indirect_only": "indirect_value",
+            "both"         : "direct_value"  ,
+        })
+
     def testResolvingTemplate(self):
         # Create an options container with a number of options. The name of the
         # option indicates in which of the options containers the value will be
