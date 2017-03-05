@@ -101,13 +101,11 @@ class Item(metaclass=ItemMetaclass):
         '''
         self.options.set(**kwargs)
 
-    def resolve_options(self, templates = None, indent="", verbose = False):
+    def resolve_options(self, templates = None, inherited = None, indent="", verbose = False):
         def p(*args, **kwargs):
             if verbose:
                 print(indent, *args, **kwargs)
                 
-        # TODO do we need parent here? Probably for inheriting.
-
         p("Resolve options for", self)
         p("* Templates:", templates)
         p("* Tags:", self.tags)
@@ -115,13 +113,13 @@ class Item(metaclass=ItemMetaclass):
         # Determine the applicable templates: the ones kindly selected by our
         # parent, plus the matching templates from our own class.  
         templates = templates or []
-        templates = templates + type(self).matching_templates(self.tags) 
+        templates = templates + type(self).matching_templates(self.tags)
+        template_option_containers = [t.options for t in templates]
+
+        inherited = inherited or dict()
 
         # Determine the options for self
-        own_options = {}
-        own_options.update(self.options.fallback_values())
-        for template in templates + [self]:
-            own_options.update(template.options.values)
+        own_options = self.options.resolve(template_option_containers, inherited)
         #print(indent+"* Own options: {}".format(own_options))
 
         # Determine the options for direct children (recursively)
@@ -132,7 +130,11 @@ class Item(metaclass=ItemMetaclass):
                 getattr(template, name)
                 for template in templates
             ]
-            children_options.update(child.resolve_options(child_templates, indent = indent+"  ", verbose = verbose ))
+
+            child_inherited = own_options
+
+            child_options = child.resolve_options(child_templates, child_inherited, indent = indent+"  ", verbose = verbose)
+            children_options.update(child_options)
 
         # Determine the options for children in containers (recursively)
         containers_options = {}
@@ -148,9 +150,12 @@ class Item(metaclass=ItemMetaclass):
                 # Select the matching templates for the child
                 child_templates = []
                 for container in template_containers:
-                    child_templates += container.matching_templates(child.tags) 
-                
-                containers_options.update(child.resolve_options(child_templates, indent = indent+"  ", verbose = verbose))
+                    child_templates += container.matching_templates(child.tags)
+
+                child_inherited = own_options
+
+                child_options = child.resolve_options(child_templates, own_options, indent = indent+"  ", verbose = verbose)
+                containers_options.update(child_options)
 
         result = {}
         result[self] = own_options

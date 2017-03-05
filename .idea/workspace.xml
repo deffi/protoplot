@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ebc5835-346d-4a86-a765-232a3418de27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/options_container.py" afterPath="$PROJECT_DIR$/protoplot/engine/options_container.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" afterPath="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protoplot/engine/item.py" afterPath="$PROJECT_DIR$/protoplot/engine/item.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,26 +17,34 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
+    <leaf>
+      <file leaf-file-name="test_options_resolving.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="133" column="45" lean-forward="false" selection-start-line="133" selection-start-column="45" selection-end-line="133" selection-end-column="45" />
-              <folding>
-                <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
-              </folding>
+            <state relative-caret-position="667">
+              <caret line="468" column="48" lean-forward="true" selection-start-line="468" selection-start-column="48" selection-end-line="468" selection-end-column="48" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_options_container.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
+      <file leaf-file-name="item.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protoplot/engine/item.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+            <state relative-caret-position="352">
+              <caret line="140" column="36" lean-forward="false" selection-start-line="140" selection-start-column="36" selection-end-line="140" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="options_container.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="487">
+              <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
               </folding>
             </state>
           </provider>
@@ -64,10 +72,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/protoplot/util/shift.py" />
-        <option value="$PROJECT_DIR$/protoplot/engine/item.py" />
         <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py" />
-        <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
         <option value="$PROJECT_DIR$/protoplot/engine/options_container.py" />
+        <option value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
+        <option value="$PROJECT_DIR$/protoplot/engine/item.py" />
       </list>
     </option>
   </component>
@@ -145,39 +153,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot_sample" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protoplot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -190,57 +166,9 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="c&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/options_container.py&#10;eries&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/model/series.py&#10;item&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;test_item&#9;null&#9;null&#10;em&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;series&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="options&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/options_container.py&#10;optionscon&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot_test/engine/test_options_container.py&#10;c&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/options_container.py&#10;eries&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/model/series.py&#10;item&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;test_item&#9;null&#9;null&#10;em&#9;FILE&#9;file:///home/martin/src/protoplot/protoplot/engine/item.py&#10;series&#9;null&#9;null" />
   </component>
-  <component name="RunManager" selected="Python tests.py.test in OptionsContainerTest">
-    <configuration default="false" name="py.test in OptionsContainerTest" type="tests" factoryName="py.test" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="protoplot" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
-      <option name="keywords" value="OptionsContainerTest" />
-      <option name="params" value="" />
-      <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="true" />
-      <method />
-    </configuration>
-    <configuration default="false" name="py.test in OptionsContainerTest and testCopy" type="tests" factoryName="py.test" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="protoplot" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
-      <option name="keywords" value="OptionsContainerTest and testCopy" />
-      <option name="params" value="" />
-      <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="true" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python tests.py.test in test_options_resolving.py">
     <configuration default="false" name="options_container" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -258,7 +186,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="py.test in OptionsContainerTest and testResolvingInherited" type="tests" factoryName="py.test" temporary="true">
+    <configuration default="false" name="py.test in test_options_resolving.py" type="tests" factoryName="py.test" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -275,35 +203,11 @@
       <option name="TEST_TYPE" value="TEST_SCRIPT" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
-      <option name="keywords" value="OptionsContainerTest and testResolvingInherited" />
+      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py" />
+      <option name="keywords" value="" />
       <option name="params" value="" />
       <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="true" />
-      <method />
-    </configuration>
-    <configuration default="false" name="py.test in OptionsContainerTest and testResolvingDeferred" type="tests" factoryName="py.test" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="protoplot" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="$PROJECT_DIR$/protoplot_test/engine/test_options_container.py" />
-      <option name="keywords" value="OptionsContainerTest and testResolvingDeferred" />
-      <option name="params" value="" />
-      <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="true" />
+      <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -440,20 +344,14 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest" />
-      <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testCopy" />
-      <item index="2" class="java.lang.String" itemvalue="Python.options_container" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testResolvingInherited" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testResolvingDeferred" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Python.options_container" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in test_options_resolving.py" />
     </list>
     <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testResolvingDeferred" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testResolvingInherited" />
-        <item index="3" class="java.lang.String" itemvalue="Python.options_container" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.py.test in OptionsContainerTest and testCopy" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Python tests.py.test in test_options_resolving.py" />
+        <item index="1" class="java.lang.String" itemvalue="Python.options_container" />
       </list>
     </recent_temporary>
   </component>
@@ -474,35 +372,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 52m 36s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 52m 45s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.04 at 22h 52m 47s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 16m 56s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 21m 57s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 22m 32s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 24m 23s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
-    <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 24m 45s.xml">
-      <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
-    </history-entry>
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 25m 00s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
     </history-entry>
     <history-entry file="py_test_in_OptionsContainerTest - 2017.03.05 at 11h 25m 07s.xml">
       <configuration name="py.test in OptionsContainerTest" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 20h 48m 19s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 20h 53m 42s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 20h 54m 47s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 20h 57m 29s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 21h 07m 05s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 21h 08m 07s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_TestOptionsResolving_and_testSelectors_class_plotAndSeries - 2017.03.05 at 21h 08m 30s.xml">
+      <configuration name="py.test in TestOptionsResolving and testSelectors_class_plotAndSeries" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_options_resolving_py - 2017.03.05 at 21h 08m 49s.xml">
+      <configuration name="py.test in test_options_resolving.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -514,7 +412,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297456" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297456" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28669277" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -552,9 +450,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3450">
           <caret line="230" column="44" lean-forward="true" selection-start-line="230" selection-start-column="44" selection-end-line="230" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -572,9 +467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="870">
           <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -592,6 +484,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1860">
           <caret line="127" column="29" lean-forward="false" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -599,9 +492,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="36" column="30" lean-forward="false" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -619,9 +509,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,6 +558,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="121" column="57" lean-forward="false" selection-start-line="121" selection-start-column="26" selection-end-line="121" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -702,9 +590,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -743,20 +628,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-907">
-          <caret line="98" column="32" lean-forward="true" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_item.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protoplot/model/series.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -764,30 +635,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot/engine/item.py">
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+        <state relative-caret-position="563">
+          <caret line="374" column="0" lean-forward="false" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_item.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1155">
+          <caret line="39" column="19" lean-forward="true" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protoplot/engine/options_container.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="133" column="45" lean-forward="false" selection-start-line="133" selection-start-column="45" selection-end-line="133" selection-end-column="45" />
+        <state relative-caret-position="487">
+          <caret line="137" column="0" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
           <folding>
             <marker date="1488709504608" expanded="true" signature="4968:5218" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_container.py">
+    <entry file="file://$PROJECT_DIR$/protoplot/engine/item.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="352">
+          <caret line="140" column="36" lean-forward="false" selection-start-line="140" selection-start-column="36" selection-end-line="140" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protoplot_test/engine/test_options_resolving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="667">
+          <caret line="468" column="48" lean-forward="true" selection-start-line="468" selection-start-column="48" selection-end-line="468" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
