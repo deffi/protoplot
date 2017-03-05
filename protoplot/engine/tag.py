@@ -18,7 +18,7 @@ def make_tags_list(arg):
         return result
 
     elif isinstance(arg, str):
-        parts = re.split(r',; ', arg)
+        parts = re.split(r'[,; ]', arg)
         return [part for part in parts if part != ""]
 
     else:
