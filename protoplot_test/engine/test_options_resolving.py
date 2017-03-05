@@ -450,9 +450,9 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
         self.assertEqual(resolved[self.series[0][1]]["a"], 1)
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
     def testSelectors_class_series(self):
         self.Plot.all.series["one"].set(a=1)
@@ -460,10 +460,10 @@ class TestOptionsResolving(unittest.TestCase):
         resolved = self.page.resolve_options()
          
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
         self.assertEqual(resolved[self.series[1][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[1][2]]["a"], 1)
 
     def testSelectors_class_plotAndSeries(self):
@@ -472,11 +472,11 @@ class TestOptionsResolving(unittest.TestCase):
         resolved = self.page.resolve_options()
          
         self.assertEqual(resolved[self.series[0][0]]["a"], 1)
-        #self.assertEqual(resolved[self.series[0][1]]["a"], "default")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[0][2]]["a"], 1)
-        #self.assertEqual(resolved[self.series[1][0]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][1]]["a"], "default")
-        #self.assertEqual(resolved[self.series[1][2]]["a"], "default")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
     
     ###############
@@ -485,12 +485,9 @@ class TestOptionsResolving(unittest.TestCase):
     
     # Both item classes and item containers offer a shortcut that allows use to
     # use
-    #     Plot.set(...)
-    #     page.plots.set(...)
-    # instead of
-    #     Plot.all.set(...)
-    #     page.plots.all.set(...)
-    
+    #     Plot.set(...)       instead of Plot.all.set(...)
+    #     page.plots.set(...) instead of page.plots.all.set(...)
+
     def testSetShortcutContainer(self):
         self.page.plots.set(a=2) # Shortcut for self.page.plots.all.set
 
