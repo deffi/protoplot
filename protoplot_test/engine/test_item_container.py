@@ -18,7 +18,7 @@ class TestItemContainer(unittest.TestCase):
                 self.options.update(kwargs)
 
         self.MockPoint = MockPoint
-        self.points = ItemContainer(self.MockPoint)
+        self.points = ItemContainer(MockPoint)
 
     def tearDown(self):
         pass
@@ -69,25 +69,41 @@ class TestItemContainer(unittest.TestCase):
     ## Templates ##
     ###############
 
-    def testTemplates(self):
-        points = self.points
-        
-        # Same template is same, different templates are different
-        self.assertIs   (points["foo"], points["foo"])
-        self.assertIsNot(points["foo"], points["bar"])
- 
-    def testAll(self):
-        points = self.points
+    def testContainerTemplates(self):
+        # See also: TestItem.testClassTemplates
+        MockPoint = self.MockPoint
+        points    = self.points
 
-        # Special access using .all
+        # Templates must be instances of the container's item class.
+        self.assertIsInstance(points["foo"], MockPoint)
+
+        # Accesses to the template with the same name must always return the
+        # same template.
+        self.assertIs(points["foo"], points["foo"])
+        self.assertIs(points[""]   , points[""]   )
+
+        # Accesses to templates with different names must return different
+        # templates.
+        self.assertIsNot(points["foo"], points["bar"])
+
+        # Accesses to .all must always return the same template, which must be
+        # the same as the template with the empty name.
+        self.assertIs(points.all, points.all)
         self.assertIs(points.all, points[""])
 
-    def testSet(self):
+
+    def testSetShortcut(self):
+        # Test the .set shortcut of the container. Note that the container's
+        # item class (MockPoint) is not actually an Item instance, and its
+        # options attribute is a dict rather than an options container.
+
         points = self.points
-         
-        points.set(color = "red")
-         
+
+        points.all.set(color = "red")
         self.assertEqual(points.all.options["color"], "red")
+
+        points.set(color = "green")
+        self.assertEqual(points.all.options["color"], "green")
 
 
 if __name__ == "__main__":

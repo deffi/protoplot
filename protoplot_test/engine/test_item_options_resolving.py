@@ -88,7 +88,7 @@ class TestOptionsResolving(unittest.TestCase):
                 self.legend = Legend()
  
             def register_options(self):
-                self.options.register("a", "defaultA")
+                self.options.register("a", "defaultA", inherit = True)
                 self.options.register("b", "defaultB")
                 self.options.register("c", "defaultC")
  
@@ -186,9 +186,9 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
     
  
-    ##################################
-    ## Setting options via instance ##
-    ##################################
+    ###############################################################
+    ## Setting options via item instance using default selectors ##
+    ###############################################################
 
     # This is the most basic case, starting from an instance and selecting the
     # children via their containers. Note that we only use the default selector
@@ -267,9 +267,9 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[1][2]]["a"], 6)
 
     
-    ###############################
-    ## Setting options via class ##
-    ###############################
+    ###############################################################
+    ## Setting options via item subclass using default selectors ##
+    ###############################################################
 
     # This is the case where we start from a class instance to select all
     # instances of this class using the default selector (.all; again, selection
@@ -337,32 +337,12 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[1][2]]["a"], 1)
     
     
-    ###############################
-    ## Selectors - .all shortcut ##
-    ###############################
-
-    # Make sure that .all is the same as [""] for both classes and containers.
-
-    def testSelectors_allShortcut(self):
-        # Classes
-        self.assertIs(self.Page  .all, self.Page  [""])
-        self.assertIs(self.Plot  .all, self.Plot  [""])
-        self.assertIs(self.Legend.all, self.Legend[""])
-        self.assertIs(self.Series.all, self.Series[""])
-        
-        # Containers
-        self.assertIs(self.page    .plots .all, self.page    .plots [""])
-        self.assertIs(self.plots[0].series.all, self.plots[0].series[""])
-        self.assertIs(self.plots[1].series.all, self.plots[1].series[""])
-
-
-    ###########################
-    ## Selectors - container ##
-    ###########################
+    ###################################################################
+    ## Setting options via item instance using non-default selectors ##
+    ###################################################################
 
     # Test non-default selectors, i. e. ["..."] instead of (and in conjunction
-    # with) the default selector (.all). Also make sure that [""] is the same
-    # as .all.
+    # with) the default selector (.all).
     #
     # We first start at a container (specifically, the plots container in the
     # page instance) and select series in the plots using all combinations of
@@ -423,9 +403,9 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
 
-    #######################
-    ## Selectors - class ##
-    #######################
+    ###################################################################
+    ## Setting options via item subclass using non-default selectors ##
+    ###################################################################
 
     # Same as before, but we start at the Plot class instead of the plots
     # container in the page instance.
@@ -478,15 +458,42 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
         self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
 
-    
+
     ###############
     ## Shortcuts ##
     ###############
     
-    # Both item classes and item containers offer a shortcut that allows use to
-    # use
-    #     Plot.set(...)       instead of Plot.all.set(...)
-    #     page.plots.set(...) instead of page.plots.all.set(...)
+    # Both item subclasses and item containers offer two shortcuts.
+
+    # First shortcut: the .all method is the same as the default selector
+    # ([""]):
+    #     Plot.all          is the same as    Plot[""]
+    #     page.plots.all    is the same as    page.plots[""]
+
+    def testAllShortcutClass(self):
+        self.assertIs(self.Page.all, self.Page[""])
+        self.assertIs(self.Plot.all, self.Plot[""])
+        self.assertIs(self.Legend.all, self.Legend[""])
+        self.assertIs(self.Series.all, self.Series[""])
+
+    def testAllShortcutContainer(self):
+        self.assertIs(self.page.plots.all, self.page.plots[""])
+        self.assertIs(self.plots[0].series.all, self.plots[0].series[""])
+        self.assertIs(self.plots[1].series.all, self.plots[1].series[""])
+
+
+    # Second shortcut: the .set method forwards to the template selected by said
+    # default selector:
+    #     Plot.set(...)          is the same as    Plot.all.set(...)
+    #     page.plots.set(...)    is the same as    page.plots.all.set(...)
+
+    def testSetShorcutClass(self):
+        self.Plot.set(a=1)  # Shortcut for self.Plot.all.set
+
+        resolved = self.page.resolve_options()
+
+        self.assertEqual(resolved[self.plots[0]]["a"], 1)
+        self.assertEqual(resolved[self.plots[1]]["a"], 1)
 
     def testSetShortcutContainer(self):
         self.page.plots.set(a=2) # Shortcut for self.page.plots.all.set
@@ -496,14 +503,37 @@ class TestOptionsResolving(unittest.TestCase):
         self.assertEqual(resolved[self.plots[0]]["a"], 2)
         self.assertEqual(resolved[self.plots[1]]["a"], 2)
 
-    def testSetShorcutClass(self):
-        self.Plot.set(a=1) # Shortcut for self.Plot.all.set
 
-        resolved = self.page.resolve_options()
- 
-        self.assertEqual(resolved[self.plots[0]]["a"], 1)
-        self.assertEqual(resolved[self.plots[1]]["a"], 1)
-            
+    #################
+    ## Inheritance ##
+    #################
+
+    # TODO test: the "a" option is inherited from page to plot to legend and
+    # series, but the "b" option is not (even though it is defined for all of
+    # the item subclasses - but the inherit parameter is False).
+
+    def testInheritanceFromObject(self):
+        # TODO
+        # set page.a, check inherited plot.a, legend.a, series.a (multi-stage
+        # inheritance for legend and series)
+        # set plot.a (overrides page.a), check again
+        # set page.a again, make sure that it does not change
+        pass
+
+    def testNoInheritanceFromObject(self):
+        # TODO
+        # set page.b, check that plot.b, legend.b, series.b is not inherited
+        pass
+
+    def testInheritanceFromClassTemplate(self):
+        # TODO
+        # like testInheritanceFromObject, but set Page.all.a
+        pass
+
+    def testInheritanceFromContainerTemplate(self):
+        # TODO
+        # like testInheritanceFromObject, but set page.plots.all.a
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
