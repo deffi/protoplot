@@ -32,6 +32,7 @@ class Item(metaclass=ItemMetaclass):
         the default template. (TODO really empty slice?)
       * An "all" property as a shortcut for [:]
       * A "set" method as a shortcut for [:].set 
+      * A constructor taking options like the set method
 
     Item subclasses should call the Item constructor with all *args and **kwargs
     and define a register_options method to register the options, like so:
@@ -59,6 +60,9 @@ class Item(metaclass=ItemMetaclass):
         # remaining kwargs.
         #self.options = OptionsContainer(self.__class__.options)
         self.options = OptionsContainer()
+        # Subclasses must override this method. We cannot do this in the
+        # subclass constructor because it must be done before setting the kwargs
+        # as options.
         self.register_options()
         self.options.set(**kwargs)
 

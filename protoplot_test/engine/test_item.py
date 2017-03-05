@@ -1,6 +1,7 @@
 import unittest
 
 from protoplot.engine.item import Item
+from protoplot.engine.item_container import ItemContainer
 
 class Test(unittest.TestCase):
     ##################
@@ -8,30 +9,31 @@ class Test(unittest.TestCase):
     ##################
     
     def setUp(self):
+        class Series(Item):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+
+            def register_options(self):
+                self.options.register("color"    , inherit = True)
+                self.options.register("lineWidth")
+                self.options.register("lineStyle")
+
         class Legend(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 
             def register_options(self):
-                self.options.register("color", True)
-        
+                self.options.register("color", inherit = True)
+
         class Plot(Item):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
 
                 self.legend = Legend()
+                self.series = ItemContainer(Series)
 
             def register_options(self):
-                self.options.register("color", False)
- 
-        class Series(Item):
-            def __init__(self, *args, **kwargs):
-                super().__init__(*args, **kwargs)
-                
-            def register_options(self):
-                self.options.register("color"    , True)
-                self.options.register("lineWidth", False)
-                self.options.register("lineStyle", False)
+                self.options.register("color")
  
         self.Legend = Legend
         self.Plot = Plot
