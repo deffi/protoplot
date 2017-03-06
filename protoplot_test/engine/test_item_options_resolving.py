@@ -3,6 +3,10 @@ import unittest
 from protoplot.engine.item import Item
 from protoplot.engine.item_container import ItemContainer
 
+
+# TODO there should be different defaults for different items
+# TODO set Plot.all.a and plot[0].a, the latter must have precedence.
+
 class TestOptionsResolving(unittest.TestCase):
     '''
     The model looks like this:
@@ -508,22 +512,63 @@ class TestOptionsResolving(unittest.TestCase):
     ## Inheritance ##
     #################
 
-    # TODO test: the "a" option is inherited from page to plot to legend and
-    # series, but the "b" option is not (even though it is defined for all of
-    # the item subclasses - but the inherit parameter is False).
-
     def testInheritanceFromObject(self):
-        # TODO
-        # set page.a, check inherited plot.a, legend.a, series.a (multi-stage
-        # inheritance for legend and series)
-        # set plot.a (overrides page.a), check again
-        # set page.a again, make sure that it does not change
-        pass
+        # Initially, nothing is set
+        resolved = self.page.resolve_options()
+        self.assertEqual(resolved[self.page        ]["a"], "defaultA")
+        self.assertEqual(resolved[self.plots[0]    ]["a"], "defaultA")
+        self.assertEqual(resolved[self.plots[1]    ]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[0][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[0][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[0][2]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][0]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][1]]["a"], "defaultA")
+        self.assertEqual(resolved[self.series[1][2]]["a"], "defaultA")
+
+        # The a parameter is inherited from page to plots (single-stage
+        # inheritance) and series (multi-stage inheritance).
+        self.page.set(a = 11)
+        self.plots[1].set(a = 22)
+        resolved = self.page.resolve_options()
+        self.assertEqual(resolved[self.page        ]["a"], 11)  # Set
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 11)  # Inherited from page
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 22)  # Set
+        self.assertEqual(resolved[self.series[0][0]]["a"], 11)  # Inherited from page
+        self.assertEqual(resolved[self.series[0][1]]["a"], 11)  # Inherited from page
+        self.assertEqual(resolved[self.series[0][2]]["a"], 11)  # Inherited from page
+        self.assertEqual(resolved[self.series[1][0]]["a"], 22)  # Inherited from plots[1]
+        self.assertEqual(resolved[self.series[1][1]]["a"], 22)  # Inherited from plots[1]
+        self.assertEqual(resolved[self.series[1][2]]["a"], 22)  # Inherited from plots[1]
+
+        # Set page.a again. Make sure that this does not change plot[1] and its
+        # series, which have been set explicitly (albeit earlier)
+        self.page.set(a = 33)
+        resolved = self.page.resolve_options()
+        self.assertEqual(resolved[self.page        ]["a"], 33)  # Set
+        self.assertEqual(resolved[self.plots[0]    ]["a"], 33)  # Inherited from page
+        self.assertEqual(resolved[self.plots[1]    ]["a"], 22)  # Set
+        self.assertEqual(resolved[self.series[0][0]]["a"], 33)  # Inherited from page
+        self.assertEqual(resolved[self.series[0][1]]["a"], 33)  # Inherited from page
+        self.assertEqual(resolved[self.series[0][2]]["a"], 33)  # Inherited from page
+        self.assertEqual(resolved[self.series[1][0]]["a"], 22)  # Inherited from plots[1]
+        self.assertEqual(resolved[self.series[1][1]]["a"], 22)  # Inherited from plots[1]
+        self.assertEqual(resolved[self.series[1][2]]["a"], 22)  # Inherited from plots[1]
 
     def testNoInheritanceFromObject(self):
-        # TODO
-        # set page.b, check that plot.b, legend.b, series.b is not inherited
-        pass
+        # The b parameter is defined for all item subclasses, but is not
+        # inherited.
+        self.page.set(b = 11)
+        self.plots[1].set(b = 22)
+        resolved = self.page.resolve_options()
+        self.assertEqual(resolved[self.page        ]["b"], 11)  # Set
+        self.assertEqual(resolved[self.plots[0]    ]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.plots[1]    ]["b"], 22)  # Set
+        self.assertEqual(resolved[self.series[0][0]]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.series[0][1]]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.series[0][2]]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.series[1][0]]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.series[1][1]]["b"], "defaultB")  # Not inherited
+        self.assertEqual(resolved[self.series[1][2]]["b"], "defaultB")  # Not inherited
 
     def testInheritanceFromClassTemplate(self):
         # TODO
